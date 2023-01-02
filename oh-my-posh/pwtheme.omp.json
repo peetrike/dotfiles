@@ -1,0 +1,117 @@
+{
+  "$schema": "https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/main/themes/schema.json",
+  "version": 2,
+  "console_title_template": "{{if .Root}}Admin: {{end}}{{.Shell}} - {{.Folder}}",
+  "blocks": [
+    {
+      "alignment": "left",
+      "segments": [
+        {
+          "background": "blue",
+          "foreground": "white",
+          "leading_diamond": "\u2590",
+          "properties": {
+            "style": "austin",
+            "threshold": 1
+          },
+          "style": "diamond",
+          "template": " {{ .FormattedMs }} ",
+          "trailing_diamond": "\ue0b0",
+          "type": "executiontime"
+        },
+        {
+          "background": "lightBlue",
+          "foreground": "lightWhite",
+          "powerline_symbol": "\ue0b0",
+          "properties": {
+            "style": "short"
+          },
+          "style": "powerline",
+          "template": " {{ path .Path .Location }} ",
+          "type": "path"
+        },
+        {
+          "background": "white",
+          "foreground": "cyan",
+          "powerline_symbol": "\ue0b0",
+          "properties": {
+            "fetch_status": true,
+            "fetch_upstream_icon": true
+          },
+          "style": "powerline",
+          "template": " {{ .HEAD }} {{ .BranchStatus }}{{ if .Working.Changed }} \uf044 {{ .Working.String }}{{ end }}{{ if and (.Staging.Changed) (.Working.Changed) }} |{{ end }}{{ if .Staging.Changed }} \uf046 {{ .Staging.String }}{{ end }}{{ if gt .StashCount 0}} \uf692 {{ .StashCount }}{{ end }}{{ if gt .WorktreeCount 0}} \uf1bb {{ .WorktreeCount }}{{ end }} ",
+          "type": "git"
+        },
+        {
+          "background": "#2e9599",
+          "background_templates": [
+            "{{ if gt .Code 0 }}lightRed{{ end }}"
+          ],
+          "foreground": "lightWhite",
+          "properties": {
+            "always_enabled": false
+          },
+          "style": "diamond",
+          "template": " {{ if gt .Code 0 }}\u2a2f{{ else }}\uf42e{{ end }} ",
+          "trailing_diamond": "\ue0b4",
+          "type": "exit"
+        }
+      ],
+      "type": "prompt"
+    },
+    {
+      "alignment": "right",
+      "segments": [
+        {
+          "foreground": "lightWhite",
+          "properties": {
+            "time_format": "15:04"
+          },
+          "style": "plain",
+          "template": "{{ .CurrentDate | date .Format }}",
+          "type": "time"
+        }
+      ],
+      "type": "prompt"
+    },
+    {
+      "alignment": "left",
+      "newline": true,
+      "segments": [
+        {
+          "style": "plain",
+          "template": "{{.Env.PSHistory}} ",
+          "type": "text"
+        },
+        {
+          "foreground": "lightYellow",
+          "style": "plain",
+          "template": " \ue0a2 ",
+          "type": "root"
+        },
+        {
+          "alias": "Character",
+          "style": "plain",
+          "template": "\u276f ",
+          "type": "text"
+        }
+      ],
+      "type": "prompt"
+    }
+  ],
+  "secondary_prompt": {
+    "background": "transparent",
+    "foreground": "darkGray",
+    "template": "∙ "
+  },
+  "valid_line": {
+    "background": "transparent",
+    "foreground": "green",
+    "template": "\u276f "
+  },
+  "error_line": {
+    "background": "transparent",
+    "foreground": "red",
+    "template": "\u276f "
+  }
+}

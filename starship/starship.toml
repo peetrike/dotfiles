@@ -1,0 +1,76 @@
+# Get editor completions based on the config schema
+"$schema" = 'https://starship.rs/config-schema.json'
+
+# Inserts a blank line between shell prompts
+add_newline = true
+continuation_prompt = "[∙](bright-black) "
+
+format = """
+$cmd_duration\
+$directory\
+$git_branch\
+$git_state\
+$git_status\
+$status\
+$fill\
+$time\
+$line_break\
+$env_var\
+$username\
+$character"""
+
+[cmd_duration]
+min_time = 1
+format = "[ $duration ]($style)[](fg:blue bg:bright-blue)"
+style = "bg:blue"
+
+[directory]
+format = "[ $path ]($style)[$read_only]($read_only_style)[](fg:bright-blue)"
+read_only = "🔒 "
+read_only_style = "fg:red $style"
+style = "bg:bright-blue"
+truncation_symbol = '…\'
+
+[git_branch]
+format = "[](white inverted)[$symbol$branch ]($style)"
+symbol = " "
+style = "bg:white fg:cyan"
+
+[git_state]
+format = '\([$state( $progress_current/$progress_total) ]($style)\)'
+style = "bg:white fg:cyan"
+
+[git_status]
+format = '([$ahead_behind(| $all_status)]($style)[](white))'
+conflicted = "=${count} "
+ahead ="⇡${count} "
+behind = "⇣${count} "
+diverged = '⇕⇡${ahead_count}⇣${behind_count}'
+up_to_date = '≡ '
+stashed = "$${count} "
+staged = "+${count} "
+untracked = "?${count} "
+modified = "!${count} "
+renamed = "»${count} "
+deleted = "✘${count} "
+style = "bg:white fg:cyan"
+
+[status]
+disabled = false
+
+[fill]
+symbol = " "
+
+[time]
+disabled = false
+time_format = "%R" # Hour:Minute Format
+format = "[$time]($style)"
+style = "fg:white"
+
+[env_var]
+variable = "PSHistory"
+format = "[$env_value]($style) "
+style = "fg:white"
+
+[username]
+format = "[$user]($style) "
