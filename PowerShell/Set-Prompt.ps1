@@ -1,7 +1,16 @@
-﻿function prompt {
+﻿if (-not (Get-Command Test-IsAdmin -ErrorAction SilentlyContinue)) {
+    function Test-IsAdmin {
+        [CmdletBinding()]
+        param()
+
+        $currentUser = [Security.Principal.WindowsIdentity]::GetCurrent()
+        ([Security.Principal.WindowsPrincipal] $currentUser).IsInRole([Security.Principal.WindowsBuiltinRole]::Administrator)
+    }
+}
+
+function prompt {
     $PowerLineText = [char] 0xE0B0
     $PromptText = [char] 0x276f
-    $Elapsed = ' {0} s ' -f [math]::Round((Get-History -Count 1).Duration.TotalSeconds, 3)
 
     $host.UI.RawUI.WindowTitle = @(
         if (Test-IsAdmin) { 'Admin:' }
@@ -15,6 +24,10 @@
         $NextColor = [ConsoleColor]::Gray
         $LastColor = [ConsoleColor]::DarkBlue
 
+        $LastCmd = (Get-History -Count 1)
+        $LastElapsed = $LastCmd.EndExecutionTime - $LastCmd.StartExecutionTime
+        $Elapsed = ' {0} s ' -f [math]::Round(($LastElapsed).TotalSeconds, 3)
+
         Write-Host $Elapsed -NoNewline -ForegroundColor $NextColor -BackgroundColor $LastColor
     #endregion
 
@@ -24,7 +37,7 @@
 
         $LastColor = $NextColor
         $NextColor = [ConsoleColor]::White
-        Write-Host (' {0} ' -f$PWD) -NoNewline -ForegroundColor $NextColor -BackgroundColor $LastColor
+        Write-Host (' {0} ' -f $PWD) -NoNewline -ForegroundColor $NextColor -BackgroundColor $LastColor
     #endregion
 
     #region end of powerline
