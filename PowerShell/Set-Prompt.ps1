@@ -43,7 +43,7 @@
     '{0} {1} ' -f $MyInvocation.HistoryId, $PromptText * ($NestedPromptLevel + 1)
 }
 
-if (Get-Module PSReadLine -ErrorAction SilentlyContinue) {
+if (Get-Module PSReadLine) {
     Set-PSReadLineOption -PromptText ('{0} ' -f [char] 0x276f)
     Set-PSReadLineOption -ContinuationPrompt '∙ '
 }
