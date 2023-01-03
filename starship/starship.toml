@@ -41,7 +41,7 @@ format = '\([$state( $progress_current/$progress_total) ]($style)\)'
 style = "bg:white fg:cyan"
 
 [git_status]
-format = '([$ahead_behind(| $all_status)]($style)[](white))'
+format = '([$ahead_behind$all_status]($style)[](white))'
 conflicted = "=${count} "
 ahead ="⇡${count} "
 behind = "⇣${count} "
