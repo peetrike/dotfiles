@@ -13,5 +13,5 @@
 
     # https://starship.rs/config/#configuration
 
-$StarshipPath = Join-Path -Path $env:ProgramFiles -ChildPath 'starship\bin\starship.exe'
-& $StarshipPath init powershell | Invoke-Expression
+#$StarshipPath = Join-Path -Path $env:ProgramFiles -ChildPath 'starship\bin\starship.exe'
+starship.exe init powershell | Invoke-Expression
