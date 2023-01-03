@@ -2,7 +2,6 @@
 
 import-module posh-git
 
-
 # 0x276f
 
 $PromptEnd = ' {0} ' -f [char] 0xFCB5
@@ -18,7 +17,8 @@ $global:GitPromptSettings.BranchColor.ForegroundColor = [ConsoleColor]::DarkCyan
 # "`u{276F}"
 # [char]0x25B6
 $powerLineProps = @{
-    Colors        = 'DarkBlue', 'Blue', 'Grey', 'DarkGrey', 'DarkCyan', 'White'
+    # Colors        = 'DarkBlue', 'Blue', 'Grey', 'DarkGrey', 'DarkCyan', 'White'
+    Colors        = 'DarkBlue', 'White'
     Title         = {
         @(
             if (Test-IsAdmin) { 'Admin:' }
@@ -31,7 +31,7 @@ $powerLineProps = @{
     Prompt        = @(      # don't use single quotes in prompt scriptblocks.  Use double quotes instead.
         { Get-Elapsed -Trim }
         { Get-SegmentedPath }
-        { Write-VcsStatus }
+        { if (Get-Command Write-VcsStatus -ErrorAction SilentlyContinue) { Write-VcsStatus } }
         { "`t" }
         { [datetime]::Now.ToString('HH:mm') }
         { "`n" }
