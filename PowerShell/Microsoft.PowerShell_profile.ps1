@@ -2,11 +2,6 @@
 $Host.PrivateData.VerboseForegroundColor = [ConsoleColor]::Cyan
 $Host.PrivateData.DebugForegroundColor = [ConsoleColor]::Cyan
 
-if ($PSVersionTable.PSVersion -gt '7.2') {
-    $PSStyle.Formatting.Verbose = $PSStyle.Foreground.BrightCyan
-    $PSStyle.Formatting.Debug = $PSStyle.Formatting.Verbose
-}
-
 #region PSReadLine config
 if (Get-Module -Name PSReadLine -ListAvailable) {
         # the following doesn't work with Prediction ListView
