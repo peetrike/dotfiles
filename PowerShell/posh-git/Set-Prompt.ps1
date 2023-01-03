@@ -3,6 +3,7 @@
 if (Get-Module ugit -ErrorAction SilentlyContinue) {
     Remove-Module ugit
 }
+
     # replace window title
 $GitPromptSettings.WindowTitle = {
     param ($GitStatus, [bool]$IsAdmin)
