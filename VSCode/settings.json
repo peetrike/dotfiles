@@ -101,10 +101,7 @@
   "powershell.codeFormatting.preset": "OTBS",
   "powershell.codeFormatting.pipelineIndentationStyle": "IncreaseIndentationForFirstPipeline",
   "powershell.codeFormatting.useCorrectCasing": true,
-
-  // this prevents PSIC process termination when project is closed
   "powershell.integratedConsole.showOnStartup": false,
-
   "powershell.integratedConsole.focusConsoleOnExecute": false,
 
   "powershell.pester.useLegacyCodeLens": false,
