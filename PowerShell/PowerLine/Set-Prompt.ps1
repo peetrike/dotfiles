@@ -1,5 +1,8 @@
 ﻿# Requires -Modules PowerLine
 
+if (Get-Module ugit -ErrorAction SilentlyContinue) {
+    Remove-Module ugit
+}
 import-module posh-git
 
 # 0x276f
@@ -31,14 +34,14 @@ $powerLineProps = @{
     Prompt        = @(      # don't use single quotes in prompt scriptblocks.  Use double quotes instead.
         { Get-Elapsed -Trim }
         { Get-SegmentedPath }
-        { if (Get-Command Write-VcsStatus -ErrorAction SilentlyContinue) { Write-VcsStatus } }
+        { Write-VcsStatus }
         { "`t" }
         { [datetime]::Now.ToString('HH:mm') }
         { "`n" }
         { $MyInvocation.HistoryId }
         { if ($pushd = (Get-Location -Stack).count) { '{0}{1}' -f [char]187, $pushd } }
         { '&Gear;' * $NestedPromptLevel }
-        { New-PromptText $PromptEnd  -ErrorForegroundColor DarkRed -ElevatedBackgroundColor Yellow }
+        { New-PromptText $PromptEnd -ErrorForegroundColor DarkRed -ElevatedBackgroundColor Yellow }
     )
     <# PSReadLinePromptText = @(
         New-PromptText ($PromptEnd + "${bg:Clear}&ColorSeparator;") -ForegroundColor Green
