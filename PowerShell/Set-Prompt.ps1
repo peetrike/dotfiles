@@ -57,6 +57,6 @@ function prompt {
 }
 
 if (Get-Module PSReadLine) {
-    Set-PSReadLineOption -PromptText ('{0} ' -f [char] 0x276f)
+    Set-PSReadLineOption -PromptText ('> ')
     Set-PSReadLineOption -ContinuationPrompt '∙ '
 }
