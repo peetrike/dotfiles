@@ -26,16 +26,18 @@ function prompt {
 
         $LastCmd = (Get-History -Count 1)
         $LastElapsed = $LastCmd.EndExecutionTime - $LastCmd.StartExecutionTime
-        $Elapsed = ' {0} s ' -f [math]::Round(($LastElapsed).TotalSeconds, 3)
+        $Elapsed = ' {0} s ' -f [math]::Round($LastElapsed.TotalSeconds, 3)
 
         Write-Host $Elapsed -NoNewline -ForegroundColor $NextColor -BackgroundColor $LastColor
     #endregion
 
-    #region Path
+    #region Add PowerLine symbol
         $NextColor = [ConsoleColor]::Blue
         Write-Host $PowerLineText -NoNewline -ForegroundColor $LastColor -BackgroundColor $NextColor
-
         $LastColor = $NextColor
+    #endregion
+
+    #region Path
         $NextColor = [ConsoleColor]::White
         Write-Host (' {0} ' -f $PWD) -NoNewline -ForegroundColor $NextColor -BackgroundColor $LastColor
     #endregion
