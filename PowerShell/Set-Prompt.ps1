@@ -12,7 +12,7 @@ function prompt {
     $PowerLineText = [char] 0xE0B0
     $PromptText = [char] 0x276f
 
-    $host.UI.RawUI.WindowTitle = @(
+    $Host.UI.RawUI.WindowTitle = @(
         if (Test-IsAdmin) { 'Admin:' }
         [Diagnostics.Process]::GetCurrentProcess().Name
         '({0})' -f $PID
@@ -24,8 +24,12 @@ function prompt {
         $NextColor = [ConsoleColor]::Gray
         $LastColor = [ConsoleColor]::DarkBlue
 
-        $LastCmd = (Get-History -Count 1)
-        $LastElapsed = $LastCmd.EndExecutionTime - $LastCmd.StartExecutionTime
+        $LastCmd = Get-History -Count 1
+        $LastElapsed = if ($LastCmd) {
+            $LastCmd.EndExecutionTime - $LastCmd.StartExecutionTime
+        } else {
+            [timespan] 0
+        }
         $Elapsed = ' {0} s ' -f [math]::Round($LastElapsed.TotalSeconds, 3)
 
         Write-Host $Elapsed -NoNewline -ForegroundColor $NextColor -BackgroundColor $LastColor
@@ -60,5 +64,5 @@ function prompt {
 
 if (Get-Module PSReadLine) {
     Set-PSReadLineOption -PromptText ('> ')
-    Set-PSReadLineOption -ContinuationPrompt '∙ '
+    Set-PSReadLineOption -ContinuationPrompt '∙ ' -Colors @{ ContinuationPrompt = 'DarkGray' }
 }
