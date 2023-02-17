@@ -297,12 +297,12 @@ if (Get-Module -Name PSReadLine -ListAvailable) {
 #endregion
 
 if ($PSVersionTable.PSVersion.Major -gt 2) {
-    if (Get-Module -Name ugit -ListAvailable) {
+    <# if (Get-Module -Name ugit -ListAvailable) {
         Import-Module -Name ugit
     } else {
         Write-Warning -Message 'Module ugit NOT available'
-    }
-    # import-module posh-git
+    } #>
+    Import-Module posh-git
 
         # make fancy prompt
     if (Get-Command -Name oh-my-posh) {
