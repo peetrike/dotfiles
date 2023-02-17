@@ -12,7 +12,7 @@ if (Get-Module -Name PSReadLine -ListAvailable) {
         Import-Module CompletionPredictor
         Import-Module Az.Tools.Predictor
     }
-    Set-PSReadLineOption -Colors @{ InlinePrediction = [ConsoleColor]::DarkCyan }
+    Set-PSReadLineOption -Colors @{ InlinePrediction = "`e[33m" }
 
     # `ForwardChar` accepts the entire suggestion text when the cursor is at the end of the line.
     # This custom binding makes `Ctrl+RightArrow` behave similarly - accepting the next word instead of the entire suggestion text.
