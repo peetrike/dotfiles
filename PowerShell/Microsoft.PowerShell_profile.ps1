@@ -15,7 +15,8 @@ if (Get-Module -Name PSReadLine -ListAvailable) {
     Set-PSReadLineOption -Colors @{ InlinePrediction = "`e[33m" }
 
     # `ForwardChar` accepts the entire suggestion text when the cursor is at the end of the line.
-    # This custom binding makes `Ctrl+RightArrow` behave similarly - accepting the next word instead of the entire suggestion text.
+    # This custom binding makes `Ctrl+RightArrow` behave similarly -
+    # accepting the next word instead of the entire suggestion text.
     $KeyHandlerParam = @{
         Chord            = 'Ctrl+RightArrow'
         BriefDescription = 'NextWordAndAcceptNextSuggestionWord'
@@ -76,7 +77,12 @@ if (Get-Module -Name PSReadLine -ListAvailable) {
         $ast = $null
         $tokens = $null
         $parseErrors = $null
-        [Microsoft.PowerShell.PSConsoleReadLine]::GetBufferState([ref]$ast, [ref]$tokens, [ref]$parseErrors, [ref]$null)
+        [Microsoft.PowerShell.PSConsoleReadLine]::GetBufferState(
+            [ref]$ast,
+            [ref]$tokens,
+            [ref]$parseErrors,
+            [ref]$null
+        )
 
         function FindToken {
             param($tokens, $cursor)
@@ -263,7 +269,12 @@ if (Get-Module -Name PSReadLine -ListAvailable) {
         $tokens = $null
         $errors = $null
         $cursor = $null
-        [Microsoft.PowerShell.PSConsoleReadLine]::GetBufferState([ref]$ast, [ref]$tokens, [ref]$errors, [ref]$cursor)
+        [Microsoft.PowerShell.PSConsoleReadLine]::GetBufferState(
+            [ref]$ast,
+            [ref]$tokens,
+            [ref]$errors,
+            [ref]$cursor
+        )
 
         $commandAst = $ast.FindAll(
             {
