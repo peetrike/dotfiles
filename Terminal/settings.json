@@ -1,17 +1,17 @@
 {
-  "$schema": "https://aka.ms/terminal-profiles-schema",
   "$help": "https://aka.ms/terminal-documentation",
+  "$schema": "https://aka.ms/terminal-profiles-schema",
   "actions": [
+    {
+      "command": "paste",
+      "keys": "ctrl+v"
+    },
     {
       "command": {
         "action": "copy",
         "singleLine": false
       },
       "keys": "ctrl+c"
-    },
-    {
-      "command": "paste",
-      "keys": "ctrl+v"
     },
     {
       "command": "find",
@@ -29,59 +29,60 @@
   "copyFormatting": "none",
   "copyOnSelect": true,
   "defaultProfile": "{574e775e-4f2a-5b96-ac1e-a2962a402336}",
-  "initialRows": 35,
+  "firstWindowPreference": "persistedWindowLayout",
   "profiles": {
     "defaults": {
       "antialiasingMode": "cleartype",
       "font": {
-        "face": "CaskaydiaCove NF"
+        "face": "CaskaydiaCove NF Mono"
       },
       "opacity": 82,
       "useAcrylic": true
     },
     "list": [
       {
+        "name": "PowerShell 7",
         "guid": "{574e775e-4f2a-5b96-ac1e-a2962a402336}",
         "hidden": false,
-        "name": "PowerShell 7",
         "source": "Windows.Terminal.PowershellCore",
         "tabTitle": "pwsh"
       },
       {
+        "name": "Windows PowerShell",
         "colorScheme": "Campbell Powershell",
         "commandline": "%SystemRoot%\\System32\\WindowsPowerShell\\v1.0\\powershell.exe",
         "guid": "{61c54bbd-c2c6-5271-96e7-009a87ff44bf}",
         "hidden": false,
-        "name": "Windows PowerShell",
         "tabTitle": "PowerShell 5.1"
       },
       {
+        "name": "PowerShell v2 Engine",
         "colorScheme": "Campbell Powershell",
         "commandline": "powershell.exe -version 2",
         "guid": "{0b827fef-1047-4794-96ca-deb2bdf75c71}",
         "hidden": false,
         "icon": "ms-appx:///ProfileIcons/{61c54bbd-c2c6-5271-96e7-009a87ff44bf}.png",
-        "name": "PowerShell v2 Engine",
         "tabTitle": "PowerShell v2"
       },
       {
+        "name": "PowerShell 7 Preview",
         "backgroundImage": "C:\\Users\\cpg4285\\OneDrive - Telia Company\\Pictures\\Logod\\Powershell\\Square150x150Logo-Preview.png",
         "backgroundImageAlignment": "bottomRight",
         "backgroundImageOpacity": 0.5,
         "backgroundImageStretchMode": "none",
         "guid": "{a3a2e83a-884a-5379-baa8-16f193a13b21}",
         "hidden": false,
-        "name": "PowerShell 7 Preview",
         "source": "Windows.Terminal.PowershellCore",
         "tabTitle": "pwsh (Preview)"
       },
       {
+        "name": "PowerShell (Linux)",
         "commandline": "docker run --rm -it telia/pwsh",
         "guid": "{4098bc75-edbe-4922-bbcc-aeb5258ff873}",
-        "icon": "C:\\Users\\cpg4285\\OneDrive - Telia Company\\Pictures\\Logod\\Powershell\\Powershell_black.ico",
-        "name": "PowerShell (Linux)"
+        "icon": "ms-appx:///ProfileIcons/pwsh.png"
       },
       {
+        "name": "Debian",
         "backgroundImage": "C:\\Users\\cpg4285\\OneDrive - Telia Company\\Pictures\\Logod\\hexagonal.png",
         "backgroundImageAlignment": "bottomRight",
         "backgroundImageOpacity": 0.5,
@@ -90,27 +91,20 @@
         "colorScheme": "Tango Dark",
         "guid": "{58ad8b0c-3ef8-5f4d-bc6f-13e4c00f2530}",
         "hidden": false,
-        "name": "Debian",
         "source": "Windows.Terminal.Wsl"
       },
       {
+        "name": "Command Prompt",
         "colorScheme": "Vintage",
         "commandline": "%SystemRoot%\\System32\\cmd.exe",
         "guid": "{0caa0dad-35be-5f56-a8ff-afceeeaa6101}",
         "hidden": false,
-        "name": "Command Prompt",
         "tabTitle": "cmd"
       },
       {
-        "elevate": true,
-        "guid": "{4f4345b3-7367-45f5-9c30-735cb3eaa1fd}",
-        "icon": "ms-appx:///ProfileIcons/pwsh.png",
-        "name": "Admin console"
-      },
-      {
+        "name": "Azure Cloud Shell",
         "guid": "{b453ae62-4e3d-5e58-b989-0a998ec441b8}",
         "hidden": true,
-        "name": "Azure Cloud Shell",
         "source": "Windows.Terminal.Azure"
       }
     ]
@@ -324,5 +318,9 @@
       "yellow": "#808000"
     }
   ],
-  "tabWidthMode": "titleLength"
+  "startOnUserLogin": true,
+  "tabWidthMode": "titleLength",
+  "theme": "system",
+  "themes": [],
+  "windowingBehavior": "useAnyExisting"
 }
