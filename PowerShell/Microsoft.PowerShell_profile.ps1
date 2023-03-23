@@ -20,7 +20,7 @@ if (Get-Module -Name PSReadLine -ListAvailable) {
     $KeyHandlerParam = @{
         Chord            = 'Ctrl+RightArrow'
         BriefDescription = 'NextWordAndAcceptNextSuggestionWord'
-        LongDescription  = 'Move cursor one character to the right in the current editing line and ' +
+        LongDescription  = 'Move cursor to the next word in the current editing line and ' +
             "accept the next word in suggestion when it's at the end of current editing line"
     }
     Set-PSReadLineKeyHandler @KeyHandlerParam {
