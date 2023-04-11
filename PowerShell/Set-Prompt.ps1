@@ -55,7 +55,7 @@ function prompt {
         $TimePosition = $host.UI.RawUI.CursorPosition
         $TimePosition.X = $host.UI.RawUI.WindowSize.Width - 5
         $host.UI.RawUI.CursorPosition = $TimePosition
-        Write-Host ([datetime]::Now.ToString('HH:mm'))
+        Write-Host ([datetime]::Now.ToString('t'))
     #endregion
 
         # second line
@@ -63,6 +63,6 @@ function prompt {
 }
 
 if (Get-Module PSReadLine) {
-    Set-PSReadLineOption -PromptText ('> ')
+    Set-PSReadLineOption -PromptText ('{0} ' -f [char] 0x276f)
     Set-PSReadLineOption -ContinuationPrompt '∙ ' -Colors @{ ContinuationPrompt = 'DarkGray' }
 }
