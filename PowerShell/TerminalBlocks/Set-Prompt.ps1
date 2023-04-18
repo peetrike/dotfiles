@@ -13,17 +13,21 @@ if (-not (Get-Command Test-IsAdmin -ErrorAction SilentlyContinue)) {
 $PromptSymbol = '❯ '
 
 $global:Prompt = @(
-    Show-ElapsedTime -Autoformat -Foreground '#FFFFFF' -Prefix ''
+    $caps = @{
+        #Caps = '▐', ''
+        Caps = '', ''
+    }
+    Show-ElapsedTime -Autoformat -Foreground White -Prefix '' #-BackgroundColor DarkBlue @caps
         # -Separator '' # This separator requires a nerdfont
-    Show-Path -DriveName -HomeString "&House;" -Foreground 'SteelBlue1' -AsUrl
+    Show-Path -DriveName -HomeString "&House;" -Foreground 'SteelBlue1' -AsUrl #-BackgroundColor Blue @caps
 
     if (Get-Module posh-git) {
              # -Caps "&nf-pl-branch;", "`n" # nf-pl-branch requires a PowerLine font
-        Show-PoshGitStatus -BeforeStatus "" -AfterStatus "" -PathStatusSeparator "" -Caps ""
+        Show-PoshGitStatus -BeforeStatus '' -AfterStatus '' -PathStatusSeparator '' #-BackgroundColor Gray80 @caps
     }
 
         # You can use -Cap "`n" instead of a newline block to add a newline conditional on this block being output
-    Show-LastExitCode -ForegroundColor 'VioletRed1' -Caps ''
+    Show-LastExitCode -ForegroundColor 'VioletRed1' #@caps
 
     # Use a short time format and a clock prefix (I don't need the EXACT time in my prompt)
     # Because all of these are right-aligned, the first one is the furthest to the right
