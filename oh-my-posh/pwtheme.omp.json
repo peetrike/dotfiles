@@ -98,20 +98,5 @@
       ],
       "type": "prompt"
     }
-  ],
-  "secondary_prompt": {
-    "background": "transparent",
-    "foreground": "darkGray",
-    "template": "∙ "
-  },
-  "valid_line": {
-    "background": "transparent",
-    "foreground": "green",
-    "template": "\u276f "
-  },
-  "error_line": {
-    "background": "transparent",
-    "foreground": "red",
-    "template": "\u276f "
-  }
+  ]
 }
