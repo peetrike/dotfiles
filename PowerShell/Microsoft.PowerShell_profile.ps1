@@ -6,7 +6,7 @@ if (Get-Module -Name PSReadLine -ListAvailable) {
 
     # set secondary prompt
     Set-PSReadLineOption -ContinuationPrompt '∙ '
-    Set-PSReadLineOption -Colors @{ ContinuationPrompt = ([char] 27 + '[37m') }
+    Set-PSReadLineOption -Colors @{ ContinuationPrompt = ([char] 27 + '[90m') }
 
     if ($PSVersionTable.PSVersion -gt '7.2') {
         Import-Module CompletionPredictor
