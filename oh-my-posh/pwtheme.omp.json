@@ -98,5 +98,10 @@
       ],
       "type": "prompt"
     }
-  ]
+  ],
+  "secondary_prompt": {
+    "background": "transparent",
+    "foreground": "darkGray",
+    "template": "∙ "
+  }
 }
