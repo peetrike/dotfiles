@@ -4,6 +4,10 @@ if (Get-Module -Name PSReadLine -ListAvailable) {
     # Set-PSReadLineKeyHandler -Key UpArrow -Function HistorySearchBackward
     # Set-PSReadLineKeyHandler -Key DownArrow -Function HistorySearchForward
 
+    # set secondary prompt
+    Set-PSReadLineOption -ContinuationPrompt '∙ '
+    Set-PSReadLineOption -Colors @{ ContinuationPrompt = ([char] 27 + '[37m') }
+
     if ($PSVersionTable.PSVersion -gt '7.2') {
         Import-Module CompletionPredictor
         Import-Module Az.Tools.Predictor
