@@ -3,7 +3,7 @@
 
 # Inserts a blank line between shell prompts
 add_newline = true
-continuation_prompt = "[∙](bright-black) "
+#continuation_prompt = "[∙](bright-black) "
 
 format = """
 $cmd_duration\
