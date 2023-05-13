@@ -16,27 +16,8 @@ if (Get-Module -Name PSReadLine -ListAvailable) {
     Set-PSReadLineOption -Colors @{ InlinePrediction = ([char] 27 + '[33;3m') }
 
     # `ForwardChar` accepts the entire suggestion text when the cursor is at the end of the line.
-    # This custom binding makes `Ctrl+RightArrow` behave similarly -
-    # accepting the next word instead of the entire suggestion text.
-    $KeyHandlerParam = @{
-        Chord            = 'Ctrl+RightArrow'
-        BriefDescription = 'NextWordAndAcceptNextSuggestionWord'
-        LongDescription  = 'Move cursor to the next word in the current editing line and ' +
-            "accept the next word in suggestion when it's at the end of current editing line"
-    }
-    Set-PSReadLineKeyHandler @KeyHandlerParam {
-        param($key, $arg)
-
-        $line = $null
-        $cursor = $null
-        [Microsoft.PowerShell.PSConsoleReadLine]::GetBufferState([ref]$line, [ref]$cursor)
-
-        if ($cursor -lt $line.Length) {
-            [Microsoft.PowerShell.PSConsoleReadLine]::NextWord($key, $arg)
-        } else {
-            [Microsoft.PowerShell.PSConsoleReadLine]::AcceptNextSuggestionWord($key, $arg)
-        }
-    }
+    # `ForwardWord` accepts only the next word from suggestion.
+    Set-PSReadLineKeyHandler -Chord 'Ctrl+RightArrow' -Function ForwardWord
 
     # add some PSReadLine "smart" functions
     #region Smart Insert/Delete
