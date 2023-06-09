@@ -41,8 +41,23 @@ function prompt {
         $LastColor = $NextColor
     #endregion
 
-    #region Path
+    #region PS version
         $NextColor = [ConsoleColor]::White
+
+        $PSVersion = $PSVersionTable.PSVersion
+        $bitness = @('x64', 'x86')[([IntPtr]::Size -eq 4)]
+        $VersionString = '  {0}.{1} ({2}) ' -f $PSVersion.Major, $PSVersion.Minor, $bitness
+        Write-Host $VersionString  -NoNewline -ForegroundColor $NextColor -BackgroundColor $LastColor
+    #endregion
+
+    #region Add PowerLine symbol
+        $NextColor = [ConsoleColor]::Gray
+        Write-Host $PowerLineText -NoNewline -ForegroundColor $LastColor -BackgroundColor $NextColor
+        $LastColor = $NextColor
+    #endregion
+
+    #region Path
+        $NextColor = [ConsoleColor]::DarkCyan
         Write-Host (' {0} ' -f $PWD) -NoNewline -ForegroundColor $NextColor -BackgroundColor $LastColor
     #endregion
 
