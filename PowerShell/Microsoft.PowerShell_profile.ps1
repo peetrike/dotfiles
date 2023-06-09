@@ -23,9 +23,7 @@ if (Get-Module -Name PSReadLine -ListAvailable) {
     #region Smart Insert/Delete
 
     # The next four key handlers are designed to make entering matched quotes
-    # parens, and braces a nicer experience.  I'd like to include functions
-    # in the module that do this, but this implementation still isn't as smart
-    # as ReSharper, so I'm just providing it as a sample.
+    # parens, and braces a nicer experience.
 
     $KeyHandlerParam = @{
         Chord            = '"', "'"
@@ -309,5 +307,84 @@ if ($PSVersionTable.PSVersion.Major -gt 2) {
         New-Alias -Name 'Set-PoshContext' -Value 'Set-EnvVar' -Scope Global
         $env:POSH_THEME = (Join-Path -Path (Split-Path -Path $profile) -ChildPath 'PoshThemes\pwtheme.omp.json')
         oh-my-posh.exe init pwsh | Invoke-Expression
+    }
+} else {
+    if (-not (Get-Command Test-IsAdmin -ErrorAction SilentlyContinue)) {
+        function Test-IsAdmin {
+            [CmdletBinding()]
+            param()
+
+            $currentUser = [Security.Principal.WindowsIdentity]::GetCurrent()
+            ([Security.Principal.WindowsPrincipal] $currentUser).IsInRole([Security.Principal.WindowsBuiltinRole]::Administrator)
+        }
+    }
+
+    function prompt {
+        $PowerLineText = [char] 0xE0B0
+        $PromptText = [char] 0x276f
+
+        $Host.UI.RawUI.WindowTitle = @(
+            if (Test-IsAdmin) { 'Admin:' }
+            [Diagnostics.Process]::GetCurrentProcess().Name
+            '({0})' -f $PID
+            '-'
+            Split-Path $PWD -Leaf
+        ) -join ' '
+
+        #region Elapsed time
+            $NextColor = [ConsoleColor]::Gray
+            $LastColor = [ConsoleColor]::DarkBlue
+
+            $LastCmd = Get-History -Count 1
+            $LastElapsed = if ($LastCmd) {
+                $LastCmd.EndExecutionTime - $LastCmd.StartExecutionTime
+            } else {
+                [timespan] 0
+            }
+            $Elapsed = ' {0} s ' -f [math]::Round($LastElapsed.TotalSeconds, 3)
+
+            Write-Host $Elapsed -NoNewline -ForegroundColor $NextColor -BackgroundColor $LastColor
+        #endregion
+
+        #region Add PowerLine symbol
+            $NextColor = [ConsoleColor]::Blue
+            Write-Host $PowerLineText -NoNewline -ForegroundColor $LastColor -BackgroundColor $NextColor
+            $LastColor = $NextColor
+        #endregion
+
+        #region PS version
+            $NextColor = [ConsoleColor]::White
+
+            $PSVersion = $PSVersionTable.PSVersion
+            $bitness = @('x64', 'x86')[([IntPtr]::Size -eq 4)]
+            $VersionString = '  {0}.{1} ({2}) ' -f $PSVersion.Major, $PSVersion.Minor, $bitness
+            Write-Host $VersionString -NoNewline -ForegroundColor $NextColor -BackgroundColor $LastColor
+        #endregion
+
+        #region Add PowerLine symbol
+            $NextColor = [ConsoleColor]::Gray
+            Write-Host $PowerLineText -NoNewline -ForegroundColor $LastColor -BackgroundColor $NextColor
+            $LastColor = $NextColor
+        #endregion
+
+        #region Path
+            $NextColor = [ConsoleColor]::DarkCyan
+            Write-Host (' {0} ' -f $PWD) -NoNewline -ForegroundColor $NextColor -BackgroundColor $LastColor
+        #endregion
+
+        #region end of powerline
+            $NextColor = $host.ui.RawUI.BackgroundColor
+            Write-Host $PowerLineText -NoNewline -ForegroundColor $LastColor -BackgroundColor $NextColor
+        #endregion
+
+        #region Time
+            $TimePosition = $host.UI.RawUI.CursorPosition
+            $TimePosition.X = $host.UI.RawUI.WindowSize.Width - 5
+            $host.UI.RawUI.CursorPosition = $TimePosition
+            Write-Host ([datetime]::Now.ToString('t'))
+        #endregion
+
+            # second line
+        '{0} {1} ' -f $MyInvocation.HistoryId, $PromptText * ($NestedPromptLevel + 1)
     }
 }
