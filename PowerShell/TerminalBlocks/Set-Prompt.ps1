@@ -17,7 +17,7 @@ $global:Prompt = @(
         # -Separator '' # This separator requires a nerdfont
 
     if (Get-Module posh-git) {
-        Show-PoshGitStatus -BeforeStatus '' -AfterStatus '' -PathStatusSeparator '' #-BackgroundColor Gray80 @caps
+        Show-PoshGitStatus -BeforeStatus '' -AfterStatus '' #-BackgroundColor Gray80 @caps
             # -Caps "&nf-pl-branch;", "`n" # nf-pl-branch requires a PowerLine font
     }
 
