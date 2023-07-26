@@ -315,7 +315,9 @@ if ($PSVersionTable.PSVersion.Major -gt 2) {
             param()
 
             $currentUser = [Security.Principal.WindowsIdentity]::GetCurrent()
-            ([Security.Principal.WindowsPrincipal] $currentUser).IsInRole([Security.Principal.WindowsBuiltinRole]::Administrator)
+            ([Security.Principal.WindowsPrincipal] $currentUser).IsInRole(
+                [Security.Principal.WindowsBuiltinRole]::Administrator
+            )
         }
     }
 
