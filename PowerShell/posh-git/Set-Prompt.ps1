@@ -22,7 +22,7 @@ $GitPromptSettings.WindowTitle = {
     #customize prompt
 $GitPromptSettings.DefaultPromptBeforeSuffix.Text = "`n"
 $GitPromptSettings.DefaultPromptSuffix = '$($MyInvocation.HistoryId) $(">" * ($nestedPromptLevel + 1)) '
-$GitPromptSettings.DefaultPromptPrefix.Text = '$([math]::Round((get-history -count 1).Duration.TotalSeconds, 3)) s '
+$GitPromptSettings.DefaultPromptPrefix.Text = '{0} s ' -f [Math]::Round((Get-History -Count 1).Duration.TotalSeconds, 3)
 
 #region add PowerLine prompt coloring to posh-git prompt
     $PromptSeparator = [char] 0xE0B0 + ' '
