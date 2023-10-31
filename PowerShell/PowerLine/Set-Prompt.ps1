@@ -27,7 +27,7 @@ $powerLineProps = @{
             if (Test-IsAdmin) { 'Admin:' }
             if ($GitStatus) {
                 '{0} [{1}]' -f $GitStatus.RepoName, $GitStatus.Branch
-            } else { (Get-SegmentedPath).Object[-1] }
+            } else { Split-Path -Path $PWD -Leaf }
             '({0})' -f $PID
         ) -join ' '
     }
@@ -41,10 +41,10 @@ $powerLineProps = @{
         { $MyInvocation.HistoryId }
         { if ($pushd = (Get-Location -Stack).count) { '{0}{1}' -f [char]187, $pushd } }
         { '&Gear;' * $NestedPromptLevel }
-        { New-PromptText $PromptEnd -ErrorForegroundColor DarkRed -ElevatedBackgroundColor Yellow }
+        #{ New-PromptText $PromptEnd -ErrorForegroundColor DarkRed -ElevatedBackgroundColor Yellow }
     )
     <# PSReadLinePromptText = @(
-        New-PromptText ($PromptEnd + "${bg:Clear}&ColorSeparator;") -ForegroundColor Green
+        New-PromptText ($PromptEnd + "${bg:Clear}&ColorSeparator;") -ForegroundColor 'White'
         New-PromptText ($PromptEnd + "${bg:Clear}&ColorSeparator;") -ForegroundColor Red
     ) #>
     PowerLineFont = $true
