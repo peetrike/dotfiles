@@ -3,23 +3,21 @@
 $PromptSymbol = '❯ '
 
 $global:Prompt = @(
-    Initialize-Prompt
+    #Initialize-Prompt
 
     $Begincaps = @{
         Caps = '▐', ''
     }
-    $Caps = @{
+    <# $Caps = @{
         Caps = '', ''
-    }
+    } #>
     Show-ElapsedTime -Autoformat <# -Foreground White #> -Prefix '' #-BackgroundColor DarkBlue @Begincaps
 
     Show-Path -DriveName -HomeString "&House;" -Foreground White -AsUrl -BackgroundColor Blue @Begincaps
         # -Separator '' # This separator requires a nerdfont
 
-    if (Get-Module posh-git) {
-        Show-PoshGitStatus -BeforeStatus '' -AfterStatus '' #-BackgroundColor Gray80 @caps
-            # -Caps "&nf-pl-branch;", "`n" # nf-pl-branch requires a PowerLine font
-    }
+    Show-PoshGitStatus -BeforeStatus '' -AfterStatus '' #-BackgroundColor Gray80 @caps
+        # -Caps "&nf-pl-branch;", "`n" # nf-pl-branch requires a PowerLine font
 
         # You can use -Cap "`n" instead of a newline block to add a newline conditional on this block being output
     Show-LastExitCode -ForegroundColor 'VioletRed1' #@caps
@@ -35,16 +33,19 @@ $global:Prompt = @(
     # So the in-line prompt is just this one character:
     New-TerminalBlock $PromptSymbol -Foreground 'Gray80' -AdminForeground Yellow -Caps ''
 
-    Exit-Prompt
+    #Exit-Prompt
 )
 
 function global:Prompt { -join $Prompt }
 
 if (Get-Module PSReadLine) {
     # Update PSReadLine to match our prompt (this has no output)
-    Set-PSReadLineOption -PromptText @(
+    Set-PSReadLineOption -PromptText $PromptSymbol <# @(
         New-Text $PromptSymbol -Foreground 'Gray80'
         New-Text $PromptSymbol -Foreground 'VioletRed1'
-    )
-    Set-PSReadLineOption -ContinuationPrompt (New-Text '∙ ' -Foreground 'SteelBlue1')
+    ) #>
+    # Set-PSReadLineOption -ContinuationPrompt (New-Text '∙ ' -Foreground 'SteelBlue1')
+    Set-PSReadLineOption -ContinuationPrompt '∙ ' -Colors @{
+        ContinuationPrompt = ([PoshCode.Pansies.RgbColor] 'SteelBlue1').ToVt()
+    }
 }
