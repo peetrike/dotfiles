@@ -1,5 +1,11 @@
 ﻿
 if ($PSVersionTable.PSVersion.Major -gt 2) {
+    #region Remove Curl alias
+    if (Get-Alias -Name curl -ErrorAction SilentlyContinue) {
+        Remove-Item alias:\curl
+    }
+    #endregion
+
     #region PSReadLine config
     if (Get-Module -Name PSReadLine -ListAvailable) {
         # the following doesn't work with Prediction ListView
