@@ -1,5 +1,5 @@
 ﻿if (-not (Get-Command Test-IsAdmin -ErrorAction SilentlyContinue)) {
-    function Test-IsAdmin {
+    function global:Test-IsAdmin {
         [CmdletBinding()]
         param()
 
@@ -8,7 +8,7 @@
     }
 }
 
-function prompt {
+function global:Prompt {
     $PowerLineText = [char] 0xE0B0
     $PromptText = [char] 0x276f
 
