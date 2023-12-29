@@ -17,11 +17,12 @@ $time\
 $line_break\
 $env_var\
 $username\
+$shlvl\
 $character"""
 
 [cmd_duration]
 min_time = 1
-format = "[ $duration ]($style)[](fg:blue bg:bright-blue)"
+format = "[▐](fg:blue)[$duration ]($style)[](fg:blue bg:bright-blue)"
 style = "bg:blue"
 
 [directory]
@@ -74,3 +75,9 @@ style = "fg:white"
 
 [username]
 format = "[$user]($style) "
+
+[shlvl]
+threshold = 1
+
+[character]
+disabled = false
