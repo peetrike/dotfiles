@@ -99,7 +99,7 @@
           "powerline_symbol": "\ue0b0",
           "foreground": "transparent",
           "background": "white",
-          "template": " \ufcb5 "
+          "template": " \uf4b5 " // 
         }
       ],
       "newline": true
