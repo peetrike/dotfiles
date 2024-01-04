@@ -103,5 +103,7 @@
     "background": "transparent",
     "foreground": "darkGray",
     "template": "∙ "
-  }
+  },
+  "pwd": "osc99",
+  "shell_integration": true
 }
