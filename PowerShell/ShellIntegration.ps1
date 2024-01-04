@@ -1,47 +1,130 @@
-﻿$global:__LastHistoryId = -1
+﻿#Requires -Version 5
 
-function global:__Terminal-Get-LastExitCode {
-  if ($? -eq $True) {
-    return 0
-  }
-  if ("$LastExitCode" -ne "") { return $LastExitCode }
-  return -1
-}
+$global:__LastHistoryId = -1
 
 function global:Prompt {
+    [CmdletBinding()]
+    param ()
+    function Add-PowerLine {
+        [CmdletBinding()]
+        param (
+                [text.StringBuilder]
+            $PromptBuilder,
+                [string]
+            $OldColor,
+                #[ref]
+                [string]
+            $NewColor
+        )
+
+        $PowerLineText = $OldColor + $NewColor + [char] 0xE0B0
+        $PromptBuilder.Append($PowerLineText)
+    }
+
+    $lastSuccess = $?
+    $currentLastExitCode = $LASTEXITCODE
+
     $Esc = [char] 27
     $Bel = [char] 7
+    $PromptText = [char] 0x276f
 
-  # First, emit a mark for the _end_ of the previous command.
+    $PromptBuilder = [Text.StringBuilder]::new(256)
+    $LastCmd = Get-History -Count 1
 
-  $gle = $(__Terminal-Get-LastExitCode);
-  $LastHistoryEntry = $(Get-History -Count 1)
-  # Skip finishing the command if the first command has not yet started
-  if ($Global:__LastHistoryId -ne -1) {
-    if ($LastHistoryEntry.Id -eq $Global:__LastHistoryId) {
-      # Don't provide a command line or exit code if there was no history entry (eg. ctrl+c, enter on no command)
-      $out += "$Esc]133;D$Bel"
-    } else {
-      $out += "$Esc]133;D;$gle$Bel"
+    #region Emit a mark for the _end_ of the previous command.
+    if ($MyInvocation.HistoryId -ne -1) {
+        [void] $PromptBuilder.Append("$Esc]133;D")
+            # Don't provide a command line or exit code if there was no history entry (eg. ctrl+c, enter on no command)
+        if ($LastCmd.Id -ne $Global:__LastHistoryId) {
+            $gle = if ($lastSuccess) {
+                0
+            } elseif ($currentLastExitCode) {
+                $currentLastExitCode
+            } else { -1 }
+
+            [void] $PromptBuilder.Append($gle)
+        }
+        [void] $PromptBuilder.Append($Bel)
     }
-  }
+    #endregion
 
+    $loc = $executionContext.SessionState.Path.CurrentLocation
 
-  $loc = $($executionContext.SessionState.Path.CurrentLocation);
+    # Prompt started
+    [void] $PromptBuilder.Append("$Esc]133;A$Bel")
 
-  # Prompt started
-  $out += "$Esc]133;A$Bel";
+    # Inform terminal about current working directory (OSC99)
+    $cwd = '{0}]9;9;"{1}"{2}' -f $Esc, $loc, $bel
+    [void] $PromptBuilder.Append($cwd)
 
-  # CWD
-  $out += "$Esc]9;9;`"$loc`"$Bel";
+    #region Build prompt here
 
-  # (your prompt here)
-  $out += "PWSH $loc$('>' * ($nestedPromptLevel + 1)) ";
+        #region Elapsed time
+        if ($LastCmd.Id -ne $Global:__LastHistoryId) {
+            <# $Foreground = $PSStyle.Foreground.White
+            $Background = $PSStyle.Background.Blue #>
 
-  # Prompt ended, Command started
-  $out += "$Esc]133;B$Bel";
+            $LastElapsed = $LastCmd.EndExecutionTime - $LastCmd.StartExecutionTime
+            $cmdTime = $LastElapsed.TotalMilliseconds
 
-  $Global:__LastHistoryId = $LastHistoryEntry.Id
+            $units = "ms"
+            $timeColor = $PSStyle.Foreground.Green
+            if ($cmdTime -gt 250 -and $cmdTime -lt 1000) {
+              $timeColor = $PSStyle.Foreground.Yellow
+            } elseif ($cmdTime -ge 1000) {
+              $timeColor = $PSStyle.Foreground.Red
+              $units = "s"
+              $cmdTime = $LastElapsed.TotalSeconds
+              if ($cmdTime -ge 60) {
+                $units = "m"
+                $cmdTIme = $LastElapsed.TotalMinutes
+              }
+            }
+            $Elapsed = ' {0}{1:0.###} {2} ' -f $timeColor, $cmdTime, $units
+            #[void] $PromptBuilder.Append($PSStyle.Foreground.White + $PSStyle.Background.Blue)
+            [void] $PromptBuilder.Append($Elapsed)
+        }
+        #endregion
 
-  return $out
+        #region Add PowerLine symbol
+        <# $Background = $PSStyle.Background.BrightBlue
+        $PromptBuilder = Add-PowerLine -OldColor $PSStyle.Foreground.Blue -NewColor $Background -PromptBuilder $PromptBuilder #>
+        #endregion
+
+        #region Path
+        $Background = $PSStyle.Background.BrightBlue
+        $LocationText = $PSStyle.FormatHyperlink($loc, $loc.Path)
+        [void] $PromptBuilder.Append($PSStyle.Foreground.BrightWhite + $Background)
+        [void] $PromptBuilder.Append(" $LocationText ")
+        #endregion
+
+        #region end of powerline
+        $Background = $PSStyle.Background.BrightWhite
+        $PromptBuilder = Add-PowerLine -OldColor $PSStyle.Reset -NewColor $PSStyle.Foreground.BrightBlue -PromptBuilder $PromptBuilder
+        [void] $PromptBuilder.AppendLine($PSStyle.Reset)
+        #endregion
+
+        # Second line
+    [void] $PromptBuilder.Append($MyInvocation.HistoryId)
+
+    $Foreground = if ($gle) {
+        $PSStyle.Foreground.Red
+    } else {
+        $PSStyle.Foreground.Green
+    }
+    $PSSymbol = $Foreground + '  ' + $PSStyle.Reset
+    [void] $PromptBuilder.Append($PSSymbol)
+
+    $NestedSymbol = ([string]$PromptText) * ($nestedPromptLevel + 1) + ' '
+    [void] $PromptBuilder.Append($NestedSymbol)
+    #endregion
+
+    # Prompt ended, Command started
+    [void] $PromptBuilder.Append("$Esc]133;B$Bel")
+
+    $Global:__LastHistoryId = $LastCmd.Id
+
+    Write-Debug -Message ('Prompt length: {0}' -f $PromptBuilder.Capacity)
+    $PromptBuilder.ToString()
+    $global:LASTEXITCODE = $currentLastExitCode
 }
