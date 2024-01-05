@@ -1,4 +1,8 @@
 ﻿#Requires -Version 5
+<#
+    .LINK
+        https://learn.microsoft.com/windows/terminal/tutorials/shell-integration
+#>
 
 $global:__LastHistoryId = -1
 
@@ -25,7 +29,7 @@ function global:Prompt {
     $currentLastExitCode = $LASTEXITCODE
 
     $Esc = [char] 27
-    $Bel = [char] 7
+    $Bel = "`a"
     $PromptText = [char] 0x276f
 
     $PromptBuilder = [Text.StringBuilder]::new(256)
@@ -33,6 +37,7 @@ function global:Prompt {
 
     #region Emit a mark for the _end_ of the previous command.
     if ($MyInvocation.HistoryId -ne -1) {
+        # OSC 133 ; D ; <Exitcode?> ; ST
         [void] $PromptBuilder.Append("$Esc]133;D")
             # Don't provide a command line or exit code if there was no history entry (eg. ctrl+c, enter on no command)
         if ($LastCmd.Id -ne $Global:__LastHistoryId) {
@@ -48,14 +53,8 @@ function global:Prompt {
     }
     #endregion
 
-    $loc = $executionContext.SessionState.Path.CurrentLocation
-
-    # Prompt started
-    [void] $PromptBuilder.Append("$Esc]133;A$Bel")
-
-    # Inform terminal about current working directory (OSC99)
-    $cwd = '{0}]9;9;"{1}"{2}' -f $Esc, $loc, $bel
-    [void] $PromptBuilder.Append($cwd)
+    # Prompt started (OSC 133 ; A ST)
+    [void] $PromptBuilder.Append("$Esc]133;A`a")
 
     #region Build prompt here
 
@@ -67,33 +66,35 @@ function global:Prompt {
             $LastElapsed = $LastCmd.EndExecutionTime - $LastCmd.StartExecutionTime
             $cmdTime = $LastElapsed.TotalMilliseconds
 
-            $units = "ms"
-            $timeColor = $PSStyle.Foreground.Green
-            if ($cmdTime -gt 250 -and $cmdTime -lt 1000) {
-              $timeColor = $PSStyle.Foreground.Yellow
-            } elseif ($cmdTime -ge 1000) {
-              $timeColor = $PSStyle.Foreground.Red
-              $units = "s"
+            $units = 'ms'
+            if ($cmdTime -ge 1000) {
+              $units = 's'
               $cmdTime = $LastElapsed.TotalSeconds
               if ($cmdTime -ge 60) {
-                $units = "m"
+                $units = 'm'
                 $cmdTIme = $LastElapsed.TotalMinutes
               }
             }
-            $Elapsed = ' {0}{1:0.###} {2} ' -f $timeColor, $cmdTime, $units
-            #[void] $PromptBuilder.Append($PSStyle.Foreground.White + $PSStyle.Background.Blue)
+            $Elapsed = ' {0:0.###} {1} ' -f $cmdTime, $units
+            [void] $PromptBuilder.Append($PSStyle.Foreground.White + $PSStyle.Background.Blue)
             [void] $PromptBuilder.Append($Elapsed)
         }
         #endregion
 
         #region Add PowerLine symbol
-        <# $Background = $PSStyle.Background.BrightBlue
-        $PromptBuilder = Add-PowerLine -OldColor $PSStyle.Foreground.Blue -NewColor $Background -PromptBuilder $PromptBuilder #>
+        $Background = $PSStyle.Background.BrightBlue
+        $PromptBuilder = Add-PowerLine -OldColor $PSStyle.Foreground.Blue -NewColor $Background -PromptBuilder $PromptBuilder
         #endregion
 
         #region Path
         $Background = $PSStyle.Background.BrightBlue
-        $LocationText = $PSStyle.FormatHyperlink($loc, $loc.Path)
+        $LocationText = if ($loc.Provider.Name -like 'filesystem') {
+            $PSStyle.FormatHyperlink($loc, $loc.Path)
+                # Inform terminal about current working directory (OSC 99)
+            $loc = $executionContext.SessionState.Path.CurrentLocation
+            $cwd = '{0}]9;9;"{1}"{2}' -f $Esc, $loc, $bel
+            [void] $PromptBuilder.Append($cwd)
+        } else { $loc }
         [void] $PromptBuilder.Append($PSStyle.Foreground.BrightWhite + $Background)
         [void] $PromptBuilder.Append(" $LocationText ")
         #endregion
@@ -119,12 +120,12 @@ function global:Prompt {
     [void] $PromptBuilder.Append($NestedSymbol)
     #endregion
 
-    # Prompt ended, Command started
-    [void] $PromptBuilder.Append("$Esc]133;B$Bel")
+    # Prompt ended, Command started (OSC 133 ; B ST)
+    [void] $PromptBuilder.Append("$Esc]133;B`a")
 
     $Global:__LastHistoryId = $LastCmd.Id
 
-    Write-Debug -Message ('Prompt length: {0}' -f $PromptBuilder.Capacity)
+    Write-Debug -Message ('Prompt length: {0}' -f $PromptBuilder.Length)
     $PromptBuilder.ToString()
     $global:LASTEXITCODE = $currentLastExitCode
 }
