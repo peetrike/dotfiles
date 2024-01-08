@@ -53,6 +53,16 @@ function global:Prompt {
     }
     #endregion
 
+    #region Set Console window title
+    $Host.UI.RawUI.WindowTitle = @(
+        if (Test-IsAdmin) { 'Admin:' }
+        [Diagnostics.Process]::GetCurrentProcess().Name
+        '({0})' -f $PID
+        '-'
+        Split-Path -Path $PWD -Leaf
+    ) -join ' '
+    #endregion
+
     # Prompt started (OSC 133 ; A ST)
     [void] $PromptBuilder.Append("$Esc]133;A`a")
 
