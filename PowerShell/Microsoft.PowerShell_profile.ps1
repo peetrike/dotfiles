@@ -317,7 +317,7 @@ if ($PSVersionTable.PSVersion.Major -gt 2) {
         function Set-EnvVar {
             $env:PSHistory = $MyInvocation.HistoryId
         }
-        New-Alias -Name 'Set-PoshContext' -Value 'Set-EnvVar' -Scope Global
+        Set-Alias -Name 'Set-PoshContext' -Value 'Set-EnvVar' -Scope Global
         $env:POSH_THEME = Join-Path -Path (Split-Path -Path $profile) -ChildPath 'PoshThemes\pwtheme.omp.json'
         oh-my-posh.exe init pwsh | Invoke-Expression
     }
