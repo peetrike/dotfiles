@@ -30,7 +30,6 @@ function global:Prompt {
     $currentLastExitCode = $LASTEXITCODE
 
     $Esc = [char] 27
-    $Bel = "`a"
     $PromptText = [char] 0x276f
 
     $PromptBuilder = [Text.StringBuilder]::new(256)
@@ -50,7 +49,7 @@ function global:Prompt {
 
             [void] $PromptBuilder.Append($gle)
         }
-        [void] $PromptBuilder.Append($Bel)
+        [void] $PromptBuilder.Append("`a")
     }
     #endregion
 
@@ -103,7 +102,7 @@ function global:Prompt {
         $LocationText = if ($loc.Provider.Name -like 'filesystem') {
             $PSStyle.FormatHyperlink($loc, $loc.Path)
                 # Inform terminal about current working directory (OSC 99)
-            $cwd = '{0}]9;9;"{1}"{2}' -f $Esc, $loc, $bel
+            $cwd = '{0}]9;9;"{1}"{2}' -f $Esc, $loc, "`a"
             [void] $PromptBuilder.Append($cwd)
         } else { $loc }
         [void] $PromptBuilder.Append($PSStyle.Foreground.BrightWhite + $Background)
