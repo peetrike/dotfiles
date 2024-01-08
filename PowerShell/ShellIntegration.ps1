@@ -120,7 +120,7 @@ function global:Prompt {
     $Foreground = if ($gle) {
         $PSStyle.Foreground.Red
     } else {
-        $PSStyle.Foreground.Green
+        $PSStyle.Foreground.BrightGreen
     }
     $PSSymbol = $Foreground + '  ' + $PSStyle.Reset
     [void] $PromptBuilder.Append($PSSymbol)
