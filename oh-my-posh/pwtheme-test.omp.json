@@ -92,12 +92,14 @@
         {
           "type": "shell",
           "style": "plain",
+          "template": " {{.Name}} {{trunc 3 .Version}} ",
           "properties": {
             "mapped_shell_names": {
-              //"pwsh": "\ue683"
-              //"pwsh": "\ue7A2"
-              //"pwsh": "\uebc7"
-              //"pwsh": "\uf120"
+              //"pwsh": "\ue683" // 
+              //"pwsh": "\ue7A2" // 
+              //"pwsh": "\uebc7" // 
+              //"pwsh": "\uf120" // 
+              "powershell": "\ue683",
               "pwsh": "\uf4b5"
             }
           }
