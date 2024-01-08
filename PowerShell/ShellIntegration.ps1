@@ -88,10 +88,10 @@ function global:Prompt {
 
         #region Path
         $Background = $PSStyle.Background.BrightBlue
+        $loc = $executionContext.SessionState.Path.CurrentLocation
         $LocationText = if ($loc.Provider.Name -like 'filesystem') {
             $PSStyle.FormatHyperlink($loc, $loc.Path)
                 # Inform terminal about current working directory (OSC 99)
-            $loc = $executionContext.SessionState.Path.CurrentLocation
             $cwd = '{0}]9;9;"{1}"{2}' -f $Esc, $loc, $bel
             [void] $PromptBuilder.Append($cwd)
         } else { $loc }
