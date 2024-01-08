@@ -12,16 +12,17 @@ function global:Prompt {
     function Add-PowerLine {
         [CmdletBinding()]
         param (
-                [text.StringBuilder]
+                [Text.StringBuilder]
             $PromptBuilder,
                 [string]
-            $OldColor,
+            $Foreground,
                 #[ref]
                 [string]
-            $NewColor
+            $Background
         )
 
-        $PowerLineText = $OldColor + $NewColor + [char] 0xE0B0
+            # support resetting colors to defaults with $Background, but still changing foreground color.
+        $PowerLineText = $Background + $Foreground + [char] 0xE0B0
         $PromptBuilder.Append($PowerLineText)
     }
 
@@ -93,11 +94,11 @@ function global:Prompt {
 
         #region Add PowerLine symbol
         $Background = $PSStyle.Background.BrightBlue
-        $PromptBuilder = Add-PowerLine -OldColor $PSStyle.Foreground.Blue -NewColor $Background -PromptBuilder $PromptBuilder
+        $PromptBuilder = Add-PowerLine -f $PSStyle.Foreground.Blue -b $Background -PromptBuilder $PromptBuilder
         #endregion
 
         #region Path
-        $Background = $PSStyle.Background.BrightBlue
+        #$Background = $PSStyle.Background.BrightBlue
         $loc = $executionContext.SessionState.Path.CurrentLocation
         $LocationText = if ($loc.Provider.Name -like 'filesystem') {
             $PSStyle.FormatHyperlink($loc, $loc.Path)
@@ -110,8 +111,7 @@ function global:Prompt {
         #endregion
 
         #region end of powerline
-        $Background = $PSStyle.Background.BrightWhite
-        $PromptBuilder = Add-PowerLine -OldColor $PSStyle.Reset -NewColor $PSStyle.Foreground.BrightBlue -PromptBuilder $PromptBuilder
+        $PromptBuilder = Add-PowerLine -f $PSStyle.Foreground.BrightBlue -b $PSStyle.Reset -PromptBuilder $PromptBuilder
         [void] $PromptBuilder.AppendLine($PSStyle.Reset)
         #endregion
 
