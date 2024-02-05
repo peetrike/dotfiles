@@ -132,6 +132,29 @@ function global:Prompt {
     # Prompt ended, Command started (OSC 133 ; B ST)
     [void] $PromptBuilder.Append("$Esc]133;B`a")
 
+    #region Add End of cmd input mark (OSC 133 ; C ST)
+    if (Get-Module PSReadLine -ErrorAction SilentlyContinue) {
+        Set-PSReadLineKeyHandler -Key Enter -BriefDescription 'OscCommandExecuted' -ScriptBlock {
+            $executingCommand = $false
+            $parseErrors = $null
+            [Microsoft.PowerShell.PSConsoleReadLine]::GetBufferState(
+                [ref]$null,
+                [ref]$null,
+                [ref]$parseErrors,
+                [ref]$null
+            )
+            $executingCommand = $parseErrors.Count -eq 0
+
+            [Microsoft.PowerShell.PSConsoleReadLine]::AcceptLine()
+
+            # Write OSC code after accepting the input - it should still happen before execution
+            if ($executingCommand) {
+                Write-Host "$([char]0x1b)]133;C`a" -NoNewline
+            }
+        }
+    }
+    #endregion
+
     $Global:__LastHistoryId = $LastCmd.Id
 
     Write-Debug -Message ('Prompt length: {0}' -f $PromptBuilder.Length)
