@@ -24,65 +24,141 @@
         "splitMode": "duplicate"
       },
       "keys": "alt+shift+d"
+    },
+    {
+      "keys": "ctrl+up",
+      "command": {
+        "action": "scrollToMark",
+        "direction": "previous"
+      }
+    },
+    {
+      "keys": "ctrl+down",
+      "command": {
+        "action": "scrollToMark",
+        "direction": "next"
+      }
+    },
+    // Add the ability to select a whole command (or its output)
+    {
+      "keys": "ctrl+shift+up",
+      "command": {
+        "action": "selectOutput",
+        "direction": "prev"
+      }
+    },
+    {
+      "keys": "ctrl+shift+down",
+      "command": {
+        "action": "selectOutput",
+        "direction": "next"
+      }
+    },
+    {
+      "keys": "ctrl+alt+shift+up",
+      "command": {
+        "action": "selectCommand",
+        "direction": "prev"
+      }
+    },
+    {
+      "keys": "ctrl+alt+shift+down",
+      "command": {
+        "action": "selectCommand",
+        "direction": "next"
+      }
     }
   ],
   "copyFormatting": "none",
   "copyOnSelect": true,
   "defaultProfile": "{574e775e-4f2a-5b96-ac1e-a2962a402336}",
   "firstWindowPreference": "persistedWindowLayout",
+  "newTabMenu": [
+    {
+      "type": "remainingProfiles"
+    }
+  ],
   "profiles": {
     "defaults": {
       "antialiasingMode": "cleartype",
       "font": {
-        "face": "CaskaydiaCove NF Mono"
+        "face": "CaskaydiaCove Nerd Font Mono"
       },
       "opacity": 82,
-      "useAcrylic": true
+      "useAcrylic": true,
+      "useAtlasEngine": true,
+      // Marks in general
+      "experimental.showMarksOnScrollbar": true,
+      // Needed for both pwsh and CMD shell integration
+      "experimental.autoMarkPrompts": true,
+      // Add support for a right-click context menu
+      // You can also just bind the `showContextMenu` action
+      //"experimental.rightClickContextMenu": true
     },
     "list": [
       {
-        "name": "PowerShell 7",
         "guid": "{574e775e-4f2a-5b96-ac1e-a2962a402336}",
         "hidden": false,
+        "name": "PowerShell 7",
         "source": "Windows.Terminal.PowershellCore",
         "tabTitle": "pwsh"
       },
       {
-        "name": "Windows PowerShell",
         "colorScheme": "Campbell Powershell",
         "commandline": "%SystemRoot%\\System32\\WindowsPowerShell\\v1.0\\powershell.exe",
         "guid": "{61c54bbd-c2c6-5271-96e7-009a87ff44bf}",
         "hidden": false,
+        "name": "Windows PowerShell",
         "tabTitle": "PowerShell 5.1"
       },
       {
-        "name": "PowerShell v2 Engine",
         "colorScheme": "Campbell Powershell",
         "commandline": "powershell.exe -version 2",
         "guid": "{0b827fef-1047-4794-96ca-deb2bdf75c71}",
         "hidden": false,
         "icon": "ms-appx:///ProfileIcons/{61c54bbd-c2c6-5271-96e7-009a87ff44bf}.png",
+        "name": "PowerShell v2 Engine",
+        "startingDirectory": "%USERPROFILE%",
         "tabTitle": "PowerShell v2"
       },
       {
-        "name": "PowerShell 7 Preview",
         "backgroundImage": "C:\\Users\\cpg4285\\OneDrive - Telia Company\\Pictures\\Logod\\Powershell\\Square150x150Logo-Preview.png",
         "backgroundImageAlignment": "bottomRight",
         "backgroundImageOpacity": 0.5,
         "backgroundImageStretchMode": "none",
         "guid": "{a3a2e83a-884a-5379-baa8-16f193a13b21}",
         "hidden": false,
+        "name": "PowerShell 7 Preview",
         "source": "Windows.Terminal.PowershellCore",
         "tabTitle": "pwsh (Preview)"
       },
       {
-        "name": "PowerShell (Linux)",
         "commandline": "docker run --rm -it telia/pwsh",
         "guid": "{4098bc75-edbe-4922-bbcc-aeb5258ff873}",
-        "icon": "ms-appx:///ProfileIcons/pwsh.png"
+        "icon": "ms-appx:///ProfileIcons/pwsh.png",
+        "name": "PowerShell (Linux)"
       },
       {
-        "name": "Debian",
+        "colorScheme": "Campbell Powershell",
+        "commandline": "%SystemRoot%\\Syswow64\\WindowsPowerShell\\v1.0\\powershell.exe",
+        "guid": "{47e99360-10cf-4e17-9673-6fe176fbd393}",
+        "hidden": false,
+        "icon": "ms-appx:///ProfileIcons/{61c54bbd-c2c6-5271-96e7-009a87ff44bf}.png",
+        "name": "Windows PowerShell (32-bit)",
+        "startingDirectory": "%USERPROFILE%",
+        "tabTitle": "PowerShell 5.1 (x86)"
+      },
+      {
+        "colorScheme": "Campbell Powershell",
+        "commandline": "%SystemRoot%\\Syswow64\\WindowsPowerShell\\v1.0\\powershell.exe -version 2",
+        "guid": "{823d1615-6fc4-469e-b2b8-b265861a9aa7}",
+        "hidden": false,
+        "icon": "ms-appx:///ProfileIcons/{61c54bbd-c2c6-5271-96e7-009a87ff44bf}.png",
+        "name": "PowerShell v2 (32-bit)",
+        "startingDirectory": "%USERPROFILE%",
+        "tabTitle": "PS 2 (x86)"
+      },
+      {
         "backgroundImage": "C:\\Users\\cpg4285\\OneDrive - Telia Company\\Pictures\\Logod\\hexagonal.png",
         "backgroundImageAlignment": "bottomRight",
         "backgroundImageOpacity": 0.5,
@@ -91,21 +167,37 @@
         "colorScheme": "Tango Dark",
         "guid": "{58ad8b0c-3ef8-5f4d-bc6f-13e4c00f2530}",
         "hidden": false,
+        "name": "Debian",
         "source": "Windows.Terminal.Wsl"
       },
       {
-        "name": "Command Prompt",
+        "adjustIndistinguishableColors": "always",
         "colorScheme": "Vintage",
         "commandline": "%SystemRoot%\\System32\\cmd.exe",
+        "cursorShape": "vintage",
+        "experimental.retroTerminalEffect": false,
+        "font": {
+          "face": "Courier New"
+        },
         "guid": "{0caa0dad-35be-5f56-a8ff-afceeeaa6101}",
         "hidden": false,
+        "name": "Command Prompt",
         "tabTitle": "cmd"
       },
       {
-        "name": "Azure Cloud Shell",
+        "colorScheme": "One Half Dark",
         "guid": "{b453ae62-4e3d-5e58-b989-0a998ec441b8}",
         "hidden": true,
+        "name": "Azure Cloud Shell",
         "source": "Windows.Terminal.Azure"
+      },
+      {
+        "commandline": "C:\\Program Files\\PowerShell\\7\\pwsh.exe",
+        "elevate": true,
+        "guid": "{9f292e92-b25d-42e7-9182-2c8040618bdf}",
+        "hidden": false,
+        "icon": "C:\\Users\\cpg4285\\OneDrive - Telia Company\\Pictures\\Logod\\Powershell\\Powershell_black_64.png",
+        "name": "Admin console"
       }
     ]
   },
@@ -321,6 +413,43 @@
   "startOnUserLogin": true,
   "tabWidthMode": "titleLength",
   "theme": "system",
-  "themes": [],
+  "themes": [
+    {
+      "name": "legacyDark",
+      "tab": {
+        "background": null,
+        "showCloseButton": "always",
+        "unfocusedBackground": null
+      },
+      "window": {
+        "applicationTheme": "dark",
+        "useMica": false
+      }
+    },
+    {
+      "name": "legacyLight",
+      "tab": {
+        "background": null,
+        "showCloseButton": "always",
+        "unfocusedBackground": null
+      },
+      "window": {
+        "applicationTheme": "light",
+        "useMica": false
+      }
+    },
+    {
+      "name": "legacySystem",
+      "tab": {
+        "background": null,
+        "showCloseButton": "always",
+        "unfocusedBackground": null
+      },
+      "window": {
+        "applicationTheme": "system",
+        "useMica": false
+      }
+    }
+  ],
   "windowingBehavior": "useAnyExisting"
 }
