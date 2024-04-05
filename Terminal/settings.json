@@ -78,6 +78,7 @@
       "type": "remainingProfiles"
     }
   ],
+  "newTabPosition": "afterCurrentTab",
   "profiles": {
     "defaults": {
       "antialiasingMode": "cleartype",
@@ -122,7 +123,7 @@
         "tabTitle": "PowerShell v2"
       },
       {
-        "backgroundImage": "C:\\Users\\cpg4285\\OneDrive - Telia Company\\Pictures\\Logod\\Powershell\\Square150x150Logo-Preview.png",
+        "backgroundImage": "%OneDrive%\\Pictures\\Logod\\Powershell\\Square150x150Logo-Preview.png",
         "backgroundImageAlignment": "bottomRight",
         "backgroundImageOpacity": 0.5,
         "backgroundImageStretchMode": "none",
@@ -159,7 +160,7 @@
         "tabTitle": "PS 2 (x86)"
       },
       {
-        "backgroundImage": "C:\\Users\\cpg4285\\OneDrive - Telia Company\\Pictures\\Logod\\hexagonal.png",
+        "backgroundImage": "%OneDrive%\\Pictures\\Logod\\hexagonal.png",
         "backgroundImageAlignment": "bottomRight",
         "backgroundImageOpacity": 0.5,
         "backgroundImageStretchMode": "none",
@@ -192,11 +193,11 @@
         "source": "Windows.Terminal.Azure"
       },
       {
-        "commandline": "C:\\Program Files\\PowerShell\\7\\pwsh.exe",
+        "commandline": "%ProgramFiles%\\PowerShell\\7\\pwsh.exe",
         "elevate": true,
         "guid": "{9f292e92-b25d-42e7-9182-2c8040618bdf}",
         "hidden": false,
-        "icon": "C:\\Users\\cpg4285\\OneDrive - Telia Company\\Pictures\\Logod\\Powershell\\Powershell_black_64.png",
+        "icon": "%OneDrive%\\Pictures\\Logod\\Powershell\\Powershell_black_64.png",
         "name": "Admin console"
       }
     ]
