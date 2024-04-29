@@ -80,7 +80,7 @@
       "segments": [
         {
           "style": "plain",
-          "template": "{{.Env.PSHistory}} ",
+          "template": "{{.Env.PSHistory}}",
           "type": "text"
         },
         {
@@ -92,7 +92,7 @@
         {
           "alias": "Character",
           "style": "plain",
-          "template": "\u276f ",
+          "template": " {{if .Env.SHLVL}}\u276f{{end}}\u276f ",
           "type": "text"
         }
       ],

@@ -316,6 +316,11 @@ if ($PSVersionTable.PSVersion.Major -gt 2) {
     if (Get-Command -Name oh-my-posh -ErrorAction Ignore) {
         function Set-EnvVar {
             $env:PSHistory = $MyInvocation.HistoryId
+            if ($NestedPromptLevel) {
+                $env:SHLVL = $NestedPromptLevel + 1
+            } else {
+                Remove-Item env:SHLVL
+            }
         }
         Set-Alias -Name 'Set-PoshContext' -Value 'Set-EnvVar' -Scope Global
         $env:POSH_THEME = Join-Path -Path (Split-Path -Path $profile) -ChildPath 'PoshThemes\pwtheme.omp.json'
