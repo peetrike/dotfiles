@@ -318,8 +318,8 @@ if ($PSVersionTable.PSVersion.Major -gt 2) {
             $env:PSHistory = $MyInvocation.HistoryId
             if ($NestedPromptLevel) {
                 $env:SHLVL = $NestedPromptLevel + 1
-            } else {
-                Remove-Item env:SHLVL
+            } elseif (Test-Path -Path Env:SHLVL) {
+                Remove-Item -Path Env:SHLVL
             }
         }
         Set-Alias -Name 'Set-PoshContext' -Value 'Set-EnvVar' -Scope Global
