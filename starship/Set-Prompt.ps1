@@ -1,5 +1,5 @@
 ﻿function Invoke-Starship-PreCommand {
-    $host.ui.RawUI.WindowTitle = @(
+    $host.UI.RawUI.WindowTitle = @(
         if (Test-IsAdmin) { 'Admin:' }
         [Diagnostics.Process]::GetCurrentProcess().Name
         '({0})' -f $PID
