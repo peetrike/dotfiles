@@ -8,10 +8,52 @@
     },
     {
       "command": {
+        "action": "selectCommand",
+        "direction": "prev"
+      },
+      "keys": "ctrl+alt+shift+up"
+    },
+    {
+      "command": {
+        "action": "scrollToMark",
+        "direction": "previous"
+      },
+      "keys": "ctrl+up"
+    },
+    {
+      "command": {
+        "action": "scrollToMark",
+        "direction": "next"
+      },
+      "keys": "ctrl+down"
+    },
+    {
+      "command": {
         "action": "copy",
         "singleLine": false
       },
       "keys": "ctrl+c"
+    },
+    {
+      "command": {
+        "action": "selectOutput",
+        "direction": "next"
+      },
+      "keys": "ctrl+shift+down"
+    },
+    {
+      "command": {
+        "action": "selectCommand",
+        "direction": "next"
+      },
+      "keys": "ctrl+alt+shift+down"
+    },
+    {
+      "command": {
+        "action": "selectOutput",
+        "direction": "prev"
+      },
+      "keys": "ctrl+shift+up"
     },
     {
       "command": "find",
@@ -24,49 +66,6 @@
         "splitMode": "duplicate"
       },
       "keys": "alt+shift+d"
-    },
-    {
-      "keys": "ctrl+up",
-      "command": {
-        "action": "scrollToMark",
-        "direction": "previous"
-      }
-    },
-    {
-      "keys": "ctrl+down",
-      "command": {
-        "action": "scrollToMark",
-        "direction": "next"
-      }
-    },
-    // Add the ability to select a whole command (or its output)
-    {
-      "keys": "ctrl+shift+up",
-      "command": {
-        "action": "selectOutput",
-        "direction": "prev"
-      }
-    },
-    {
-      "keys": "ctrl+shift+down",
-      "command": {
-        "action": "selectOutput",
-        "direction": "next"
-      }
-    },
-    {
-      "keys": "ctrl+alt+shift+up",
-      "command": {
-        "action": "selectCommand",
-        "direction": "prev"
-      }
-    },
-    {
-      "keys": "ctrl+alt+shift+down",
-      "command": {
-        "action": "selectCommand",
-        "direction": "next"
-      }
     }
   ],
   "copyFormatting": "none",
@@ -82,19 +81,14 @@
   "profiles": {
     "defaults": {
       "antialiasingMode": "cleartype",
+      "experimental.autoMarkPrompts": true,
+      "experimental.showMarksOnScrollbar": true,
       "font": {
-        "face": "CaskaydiaCove Nerd Font Mono"
+        "face": "Cascadia Mono NF"
       },
       "opacity": 82,
       "useAcrylic": true,
-      "useAtlasEngine": true,
-      // Marks in general
-      "experimental.showMarksOnScrollbar": true,
-      // Needed for both pwsh and CMD shell integration
-      "experimental.autoMarkPrompts": true,
-      // Add support for a right-click context menu
-      // You can also just bind the `showContextMenu` action
-      //"experimental.rightClickContextMenu": true
+      "useAtlasEngine": true
     },
     "list": [
       {
@@ -134,7 +128,7 @@
         "tabTitle": "pwsh (Preview)"
       },
       {
-        "commandline": "docker run --rm -it telia/pwsh",
+        "commandline": "C:\\Program Files\\RedHat\\Podman\\podman.exe run --rm -it localhost/telia/pwsh",
         "guid": "{4098bc75-edbe-4922-bbcc-aeb5258ff873}",
         "icon": "ms-appx:///ProfileIcons/pwsh.png",
         "name": "PowerShell (Linux)"
@@ -199,6 +193,18 @@
         "hidden": false,
         "icon": "%OneDrive%\\Pictures\\Logod\\Powershell\\Powershell_black_64.png",
         "name": "Admin console"
+      },
+      {
+        "guid": "{8ab8e6f6-35c6-5b46-8419-3e1568105476}",
+        "hidden": false,
+        "name": "podman-machine-default",
+        "source": "Windows.Terminal.Wsl"
+      },
+      {
+        "guid": "{fe182347-0025-506f-8dd5-7cacb33114b9}",
+        "hidden": false,
+        "name": "podman-net-usermode",
+        "source": "Windows.Terminal.Wsl"
       }
     ]
   },
@@ -414,43 +420,7 @@
   "startOnUserLogin": true,
   "tabWidthMode": "titleLength",
   "theme": "system",
-  "themes": [
-    {
-      "name": "legacyDark",
-      "tab": {
-        "background": null,
-        "showCloseButton": "always",
-        "unfocusedBackground": null
-      },
-      "window": {
-        "applicationTheme": "dark",
-        "useMica": false
-      }
-    },
-    {
-      "name": "legacyLight",
-      "tab": {
-        "background": null,
-        "showCloseButton": "always",
-        "unfocusedBackground": null
-      },
-      "window": {
-        "applicationTheme": "light",
-        "useMica": false
-      }
-    },
-    {
-      "name": "legacySystem",
-      "tab": {
-        "background": null,
-        "showCloseButton": "always",
-        "unfocusedBackground": null
-      },
-      "window": {
-        "applicationTheme": "system",
-        "useMica": false
-      }
-    }
-  ],
+  "themes": [],
+  "useAcrylicInTabRow": true,
   "windowingBehavior": "useAnyExisting"
 }
