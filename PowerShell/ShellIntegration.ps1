@@ -4,8 +4,6 @@
         https://learn.microsoft.com/windows/terminal/tutorials/shell-integration
 #>
 
-$global:__LastHistoryId = -1
-
 if (Get-Module PSReadLine -ErrorAction SilentlyContinue) {
     #region Add End of cmd input mark (OSC 133 ; C ST)
     Set-PSReadLineKeyHandler -Key Enter -BriefDescription 'OscCommandExecuted' -ScriptBlock {
@@ -63,7 +61,7 @@ function global:Prompt {
         # OSC 133 ; D ; <Exitcode?> ; ST
         [void] $PromptBuilder.Append("$Esc]133;D")
             # Don't provide a command line or exit code if there was no history entry (eg. ctrl+c, enter on no command)
-        if ($LastCmd.Id -ne $Global:__LastHistoryId) {
+        if ($LastCmd) {
             $gle = if ($lastSuccess) {
                 0
             } elseif ($currentLastExitCode) {
@@ -92,7 +90,7 @@ function global:Prompt {
     #region Build prompt here
 
         #region Elapsed time
-        if ($LastCmd.Id -ne $Global:__LastHistoryId) {
+        if ($LastCmd) {
             <# $Foreground = $PSStyle.Foreground.White
             $Background = $PSStyle.Background.Blue #>
 
@@ -154,9 +152,6 @@ function global:Prompt {
 
     # Prompt ended, Command started (OSC 133 ; B ST)
     [void] $PromptBuilder.Append("$Esc]133;B`a")
-
-
-    $Global:__LastHistoryId = $LastCmd.Id
 
     Write-Debug -Message ('Prompt length: {0}' -f $PromptBuilder.Length)
     $PromptBuilder.ToString()
