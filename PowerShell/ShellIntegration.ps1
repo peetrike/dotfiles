@@ -4,7 +4,11 @@
         https://learn.microsoft.com/windows/terminal/tutorials/shell-integration
 #>
 
+$Global:__LastHistoryId = -1
+
 if (Get-Module PSReadLine -ErrorAction SilentlyContinue) {
+    Set-PSReadLineOption -ExtraPromptLineCount 1
+    Set-PSReadLineOption -PromptText '❯ '
     #region Add End of cmd input mark (OSC 133 ; C ST)
     Set-PSReadLineKeyHandler -Key Enter -BriefDescription 'OscCommandExecuted' -ScriptBlock {
         $executingCommand = $false
@@ -58,17 +62,23 @@ function global:Prompt {
 
     #region Emit a mark for the _end_ of the previous command.
     if ($MyInvocation.HistoryId -ne -1) {
-        # OSC 133 ; D ; <Exitcode?> ; ST
+        # OSC 133 ; D ; <Exitcode?> ST
         [void] $PromptBuilder.Append("$Esc]133;D")
-            # Don't provide a command line or exit code if there was no history entry (eg. ctrl+c, enter on no command)
         if ($LastCmd) {
             $gle = if ($lastSuccess) {
                 0
-            } elseif ($currentLastExitCode) {
+            } elseif ($Error[0].InvocationInfo.HistoryId -eq $LastCmd.Id) {
+                -1
+            } else {
                 $currentLastExitCode
-            } else { -1 }
+            }
 
-            [void] $PromptBuilder.Append($gle)
+                # Don't provide a command line or exit code if there was no history entry (eg. ctrl+c, enter on no command)
+            if ($LastCmd.Id -ne $Global:__LastHistoryId) {
+                $Global:__LastHistoryId = $LastCmd.Id
+                $exitCode = ';' + $gle
+                [void] $PromptBuilder.Append($exitCode)
+            }
         }
         [void] $PromptBuilder.Append("`a")
     }
@@ -132,10 +142,19 @@ function global:Prompt {
 
         #region end of powerline
         $PromptBuilder = Add-PowerLine -f $PSStyle.Foreground.BrightBlue -b $PSStyle.Reset -PromptBuilder $PromptBuilder
-        [void] $PromptBuilder.AppendLine($PSStyle.Reset)
+        [void] $PromptBuilder.Append($PSStyle.Reset)
         #endregion
 
-        # Second line
+        Write-Host -NoNewline $PromptBuilder.ToString()
+        #region Time
+            $TimePosition = $host.UI.RawUI.CursorPosition
+            $TimePosition.X = $host.UI.RawUI.WindowSize.Width - 5
+            $host.UI.RawUI.CursorPosition = $TimePosition
+            Write-Host ([datetime]::Now.ToString('t'))
+        #endregion
+
+    #region Second line
+    $PromptBuilder = [Text.StringBuilder]::new(256)
     [void] $PromptBuilder.Append($MyInvocation.HistoryId)
 
     $Foreground = if ($gle) {
@@ -148,12 +167,12 @@ function global:Prompt {
 
     $NestedSymbol = ([string]$PromptText) * ($nestedPromptLevel + 1) + ' '
     [void] $PromptBuilder.Append($NestedSymbol)
-    #endregion
 
     # Prompt ended, Command started (OSC 133 ; B ST)
     [void] $PromptBuilder.Append("$Esc]133;B`a")
+    #endregion
 
-    Write-Debug -Message ('Prompt length: {0}' -f $PromptBuilder.Length)
     $PromptBuilder.ToString()
+    #endregion
     $global:LASTEXITCODE = $currentLastExitCode
 }
