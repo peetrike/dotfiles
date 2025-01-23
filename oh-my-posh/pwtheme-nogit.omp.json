@@ -1,97 +1,110 @@
 {
   "$schema": "https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/main/themes/schema.json",
-  "version": 2,
+  "secondary_prompt": {
+    "template": "\u2219 ",
+    "foreground": "darkGray",
+    "background": "transparent"
+  },
+  "pwd": "osc99",
   "console_title_template": "{{if .Root}}Admin: {{end}}{{.Shell}} - {{.Folder}}",
   "blocks": [
     {
+      "type": "prompt",
       "alignment": "left",
       "segments": [
         {
-          "background": "blue",
-          "foreground": "white",
-          "leading_diamond": "\u2590",
           "properties": {
+            "cache_duration": "none",
             "style": "austin",
             "threshold": 1
           },
-          "style": "diamond",
-          "template": " {{ .FormattedMs }} ",
+          "leading_diamond": "\u2590",
           "trailing_diamond": "\ue0b0",
-          "type": "executiontime"
+          "template": " {{ .FormattedMs }} ",
+          "foreground": "white",
+          "background": "blue",
+          "type": "executiontime",
+          "style": "diamond"
         },
         {
-          "background": "lightBlue",
-          "foreground": "lightWhite",
-          "powerline_symbol": "\ue0b0",
           "properties": {
+            "cache_duration": "none",
             "style": "short"
           },
-          "style": "powerline",
           "template": " {{ path .Path .Location }} ",
-          "type": "path"
+          "foreground": "lightWhite",
+          "powerline_symbol": "\ue0b0",
+          "background": "lightBlue",
+          "type": "path",
+          "style": "powerline"
         },
         {
+          "properties": {
+            "always_enabled": false,
+            "cache_duration": "none"
+          },
+          "trailing_diamond": "\ue0b4",
+          "template": " {{ if gt .Code 0 }}\u2a2f{{ else }}\uf42e{{ end }} ",
+          "foreground": "lightWhite",
           "background": "#2e9599",
+          "type": "exit",
+          "style": "diamond",
           "background_templates": [
             "{{ if gt .Code 0 }}lightRed{{ end }}"
-          ],
-          "foreground": "lightWhite",
-          "properties": {
-            "always_enabled": false
-          },
-          "style": "diamond",
-          "template": " {{ if gt .Code 0 }}\u2a2f{{ else }}\uf42e{{ end }} ",
-          "trailing_diamond": "\ue0b4",
-          "type": "exit"
+          ]
         }
-      ],
-      "type": "prompt"
+      ]
     },
     {
+      "type": "prompt",
       "alignment": "right",
       "segments": [
         {
-          "foreground": "lightWhite",
           "properties": {
+            "cache_duration": "none",
             "time_format": "15:04"
           },
-          "style": "plain",
           "template": "{{ .CurrentDate | date .Format }}",
-          "type": "time"
+          "foreground": "lightWhite",
+          "type": "time",
+          "style": "plain"
         }
-      ],
-      "type": "prompt"
+      ]
     },
     {
+      "type": "prompt",
       "alignment": "left",
-      "newline": true,
       "segments": [
         {
-          "style": "plain",
+          "properties": {
+            "cache_duration": "none"
+          },
           "template": "{{.Env.PSHistory}} ",
-          "type": "text"
+          "type": "text",
+          "style": "plain"
         },
         {
-          "foreground": "lightYellow",
-          "style": "plain",
+          "properties": {
+            "cache_duration": "none"
+          },
           "template": " \ue0a2 ",
-          "type": "root"
+          "foreground": "lightYellow",
+          "type": "root",
+          "style": "plain"
         },
         {
+          "properties": {
+            "cache_duration": "none"
+          },
           "alias": "Character",
-          "style": "plain",
-          "template": "\u276f ",
-          "type": "text"
+          "template": "❯ ",
+          "type": "text",
+          "style": "plain"
         }
       ],
-      "type": "prompt"
+      "newline": true
     }
   ],
-  "secondary_prompt": {
-    "background": "transparent",
-    "foreground": "darkGray",
-    "template": "∙ "
-  },
-  "pwd": "osc99",
+  "version": 3,
   "shell_integration": true
 }
