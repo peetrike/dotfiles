@@ -167,10 +167,10 @@ function global:Prompt {
 
     $NestedSymbol = ([string]$PromptText) * ($nestedPromptLevel + 1) + ' '
     [void] $PromptBuilder.Append($NestedSymbol)
+    #endregion
 
     # Prompt ended, Command started (OSC 133 ; B ST)
     [void] $PromptBuilder.Append("$Esc]133;B`a")
-    #endregion
 
     $PromptBuilder.ToString()
     #endregion
