@@ -13,45 +13,60 @@
       "alignment": "left",
       "segments": [
         {
+          "type": "executiontime",
+          "style": "diamond",
+          "leading_diamond": "\u2590",
+          "trailing_diamond": "\ue0b0",
+          "foreground": "white",
+          "background": "blue",
+          "template": " {{ .FormattedMs }} ",
           "properties": {
             "cache_duration": "none",
             "style": "austin",
             "threshold": 1
-          },
-          "leading_diamond": "\u2590",
-          "trailing_diamond": "\ue0b0",
-          "template": " {{ .FormattedMs }} ",
-          "foreground": "white",
-          "background": "blue",
-          "type": "executiontime",
-          "style": "diamond"
+          }
         },
         {
+          "type": "shell",
+          "style": "powerline",
+          "powerline_symbol": "\ue0b0",
+          "foreground": "lightWhite",
+          "background": "lightBlue",
+          "template": " {{.Name}} {{trunc 3 .Version}} ",
+          "properties": {
+            "cache_duration": "none",
+            "mapped_shell_names": {
+              "powershell": "\ue683",
+              "pwsh": "\uf4b5"
+            }
+          }
+        },
+        {
+          "type": "path",
+          "style": "powerline",
+          "powerline_symbol": "\ue0b0",
+          "foreground": "blue",
+          "background": "white",
+          "template": " {{ path .Path .Location }} ",
           "properties": {
             "cache_duration": "none",
             "style": "short"
-          },
-          "template": " {{ path .Path .Location }} ",
-          "foreground": "lightWhite",
-          "powerline_symbol": "\ue0b0",
-          "background": "lightBlue",
-          "type": "path",
-          "style": "powerline"
+          }
         },
         {
+          "type": "status",
+          "style": "diamond",
+          "trailing_diamond": "\ue0b4",
+          "foreground": "lightWhite",
+          "background": "#2e9599",
+          "background_templates": [
+            "{{ if gt .Code 0 }}lightRed{{ end }}"
+          ],
+          "template": " {{ if gt .Code 0 }}\u2a2f{{ else }}\uf42e{{ end }} ",
           "properties": {
             "always_enabled": false,
             "cache_duration": "none"
-          },
-          "trailing_diamond": "\ue0b4",
-          "template": " {{ if gt .Code 0 }}\u2a2f{{ else }}\uf42e{{ end }} ",
-          "foreground": "lightWhite",
-          "background": "#2e9599",
-          "type": "exit",
-          "style": "diamond",
-          "background_templates": [
-            "{{ if gt .Code 0 }}lightRed{{ end }}"
-          ]
+          }
         }
       ]
     },
@@ -60,14 +75,14 @@
       "alignment": "right",
       "segments": [
         {
+          "type": "time",
+          "style": "plain",
+          "foreground": "lightWhite",
+          "template": "{{ .CurrentDate | date .Format }}",
           "properties": {
             "cache_duration": "none",
             "time_format": "15:04"
-          },
-          "template": "{{ .CurrentDate | date .Format }}",
-          "foreground": "lightWhite",
-          "type": "time",
-          "style": "plain"
+          }
         }
       ]
     },
@@ -76,30 +91,30 @@
       "alignment": "left",
       "segments": [
         {
-          "properties": {
-            "cache_duration": "none"
-          },
-          "template": "{{.Env.PSHistory}} ",
           "type": "text",
-          "style": "plain"
-        },
-        {
+          "style": "plain",
+          "template": "{{.Env.PSHistory}} ",
           "properties": {
             "cache_duration": "none"
-          },
-          "template": " \ue0a2 ",
-          "foreground": "lightYellow",
+          }
+        },
+        {
           "type": "root",
-          "style": "plain"
-        },
-        {
+          "style": "plain",
+          "foreground": "lightYellow",
+          "template": " \ue0a2 ",
           "properties": {
             "cache_duration": "none"
-          },
+          }
+        },
+        {
+          "type": "text",
+          "style": "plain",
           "alias": "Character",
           "template": "❯ ",
-          "type": "text",
-          "style": "plain"
+          "properties": {
+            "cache_duration": "none"
+          }
         }
       ],
       "newline": true
