@@ -73,7 +73,8 @@ function global:Prompt {
                 $currentLastExitCode
             }
 
-                # Don't provide a command line or exit code if there was no history entry (eg. ctrl+c, enter on no command)
+                # Don't provide a command line or exit code if there was no history entry
+                # (eg. ctrl+c, enter on no command)
             if ($LastCmd.Id -ne $Global:__LastHistoryId) {
                 $Global:__LastHistoryId = $LastCmd.Id
                 $exitCode = ';' + $gle
