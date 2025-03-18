@@ -57,7 +57,7 @@ function global:Prompt {
     $Esc = [char] 27
     $PromptText = [char] 0x276f
 
-    $PromptBuilder = [Text.StringBuilder]::new(256)
+    $PromptBuilder = [Text.StringBuilder] 256
     $LastCmd = Get-History -Count 1
 
     #region Emit a mark for the _end_ of the previous command.
