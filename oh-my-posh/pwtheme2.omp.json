@@ -37,13 +37,26 @@
         },
         {
           "properties": {
+            "mapped_shell_names": {
+              "pwsh": "\uf4b5"
+            }
+          },
+          "template": " {{.Name}} {{trunc 3 .Version}} ",
+          "powerline_symbol": "\ue0b0",
+          "foreground": "lightWhite",
+          "background": "lightBlue",
+          "type": "shell",
+          "style": "powerline"
+        },
+        {
+          "properties": {
             "cache_duration": "none",
             "style": "short"
           },
           "template": " {{ .Path }} ",
-          "foreground": "lightWhite",
           "powerline_symbol": "\ue0b0",
-          "background": "lightBlue",
+          "foreground": "lightWhite",
+          "background": "cyan",
           "type": "path",
           "style": "powerline"
         },
@@ -117,17 +130,6 @@
           "powerline_symbol": "\ue0b0",
           "background": "lightYellow",
           "type": "root",
-          "style": "powerline"
-        },
-        {
-          "properties": {
-            "cache_duration": "none"
-          },
-          "template": " \uf4b5 ",
-          "foreground": "transparent",
-          "powerline_symbol": "\ue0b0",
-          "background": "white",
-          "type": "text",
           "style": "powerline"
         }
       ],
