@@ -310,7 +310,7 @@ if ($PSVersionTable.PSVersion.Major -gt 2) {
     } else {
         Write-Warning -Message 'Module ugit NOT available'
     } #>
-    Import-Module posh-git
+    Import-Module git-completion
 
     # make fancy prompt
     if (Get-Command -Name oh-my-posh -ErrorAction Ignore) {
@@ -408,9 +408,3 @@ if ($PSVersionTable.PSVersion.Major -gt 2) {
         '{0} {1} ' -f $MyInvocation.HistoryId, $PromptText * ($NestedPromptLevel + 1)
     }
 }
-
-#f45873b3-b655-43a6-b217-97c00aa0db58 PowerToys CommandNotFound module
-if ($PSVersionTable.PSVersion.Major -ge 7) {
-    Import-Module -Name Microsoft.WinGet.CommandNotFound
-}
-#f45873b3-b655-43a6-b217-97c00aa0db58
