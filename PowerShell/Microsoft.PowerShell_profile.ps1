@@ -323,8 +323,8 @@ if ($PSVersionTable.PSVersion.Major -gt 2) {
             }
         }
         Set-Alias -Name 'Set-PoshContext' -Value 'Set-EnvVar' -Scope Global
-        $env:POSH_THEME = Join-Path -Path (Split-Path -Path $profile) -ChildPath 'PoshThemes\pwtheme.omp.json'
-        oh-my-posh.exe init pwsh --config $env:POSH_THEME | Invoke-Expression
+        $ThemeFile = Join-Path -Path (Split-Path -Path $profile) -ChildPath 'PoshThemes\pwtheme.omp.json'
+        oh-my-posh.exe init pwsh --config "$ThemeFile" | Invoke-Expression
     }
 } else {
     if (-not (Get-Command Test-IsAdmin -ErrorAction SilentlyContinue)) {
