@@ -1,4 +1,4 @@
-﻿function Invoke-Starship-PreCommand {
+﻿function Global:Invoke-Starship-PreCommand {
     $host.UI.RawUI.WindowTitle = @(
         if (Test-IsAdmin) { 'Admin:' }
         [Diagnostics.Process]::GetCurrentProcess().Name
