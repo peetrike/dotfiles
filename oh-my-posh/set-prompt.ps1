@@ -15,4 +15,4 @@ if (-not $Theme.Contains('.')) {
 }
     # https://ohmyposh.dev/docs/installation/customize
 $env:POSH_THEME = (Join-Path -Path $ThemeFolder -ChildPath $Theme)
-oh-my-posh.exe init pwsh | Invoke-Expression
+oh-my-posh.exe init pwsh --config $env:POSH_THEME | Invoke-Expression
