@@ -93,7 +93,7 @@
         {
           "type": "text",
           "style": "plain",
-          "template": "{{.Env.PSHistory}} ",
+          "template": "{{.Env.PSHistory}}",
           "properties": {
             "cache_duration": "none"
           }
@@ -102,7 +102,7 @@
           "type": "root",
           "style": "plain",
           "foreground": "lightYellow",
-          "template": " \ue0a2 ",
+          "template": " \ue0a2",
           "properties": {
             "cache_duration": "none"
           }
@@ -111,7 +111,7 @@
           "type": "text",
           "style": "plain",
           "alias": "Character",
-          "template": "❯ ",
+          "template": " ❯ ",
           "properties": {
             "cache_duration": "none"
           }
