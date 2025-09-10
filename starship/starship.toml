@@ -72,9 +72,10 @@ style = "fg:white"
 variable = "PSHistory"
 format = "[$env_value]($style) "
 style = "fg:white"
+description = "the command history number"
 
 [username]
-format = "[$user]($style) "
+format = "[Admin]($style) "
 
 [shlvl]
 threshold = 1
