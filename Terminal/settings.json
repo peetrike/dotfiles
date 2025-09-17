@@ -3,61 +3,57 @@
   "$schema": "https://aka.ms/terminal-profiles-schema",
   "actions": [
     {
-      "command": "paste",
-      "keys": "ctrl+v"
+      "command": {
+        "action": "selectCommand",
+        "direction": "next"
+      },
+      "id": "User.selectCommand.2A0DA8E0"
     },
     {
       "command": {
         "action": "selectCommand",
         "direction": "prev"
       },
-      "keys": "ctrl+alt+shift+up"
+      "id": "User.selectCommand.D3F0B923"
     },
     {
       "command": {
-        "action": "scrollToMark",
-        "direction": "previous"
-      },
-      "keys": "ctrl+up"
-    },
-    {
-      "command": {
-        "action": "scrollToMark",
+        "action": "selectOutput",
         "direction": "next"
       },
-      "keys": "ctrl+down"
+      "id": "User.selectOutput.2A0DA8E0"
     },
     {
       "command": {
         "action": "copy",
         "singleLine": false
       },
-      "keys": "ctrl+c"
-    },
-    {
-      "command": {
-        "action": "selectOutput",
-        "direction": "next"
-      },
-      "keys": "ctrl+shift+down"
-    },
-    {
-      "command": {
-        "action": "selectCommand",
-        "direction": "next"
-      },
-      "keys": "ctrl+alt+shift+down"
+      "id": "User.copy.644BA8F2"
     },
     {
       "command": {
         "action": "selectOutput",
         "direction": "prev"
       },
-      "keys": "ctrl+shift+up"
+      "id": "User.selectOutput.D3F0B923"
     },
     {
-      "command": "find",
-      "keys": "ctrl+shift+f"
+      "command": "paste",
+      "id": "User.paste"
+    },
+    {
+      "command": {
+        "action": "scrollToMark",
+        "direction": "next"
+      },
+      "id": "User.scrollToMark.2A0DA8E0"
+    },
+    {
+      "command": {
+        "action": "scrollToMark",
+        "direction": "previous"
+      },
+      "id": "User.scrollToMark.D3F0B923"
     },
     {
       "command": {
@@ -65,29 +61,93 @@
         "split": "auto",
         "splitMode": "duplicate"
       },
-      "keys": "alt+shift+d"
+      "id": "User.splitPane.A6751878"
+    },
+    {
+      "command": "find",
+      "id": "User.find"
     }
   ],
   "copyFormatting": "none",
   "copyOnSelect": true,
   "defaultProfile": "{574e775e-4f2a-5b96-ac1e-a2962a402336}",
   "firstWindowPreference": "persistedWindowLayout",
-  "newTabMenu": [
-    { "type":"profile", "profile": "PowerShell" },
-    { "type":"profile", "profile": "Windows PowerShell" },
+  "keybindings": [
     {
-      "type":"folder",
+      "id": "User.selectCommand.D3F0B923",
+      "keys": "ctrl+alt+shift+up"
+    },
+    {
+      "id": "User.find",
+      "keys": "ctrl+shift+f"
+    },
+    {
+      "id": "User.paste",
+      "keys": "ctrl+v"
+    },
+    {
+      "id": "User.copy.644BA8F2",
+      "keys": "ctrl+c"
+    },
+    {
+      "id": "User.scrollToMark.2A0DA8E0",
+      "keys": "ctrl+down"
+    },
+    {
+      "id": "User.scrollToMark.D3F0B923",
+      "keys": "ctrl+up"
+    },
+    {
+      "id": "User.selectCommand.2A0DA8E0",
+      "keys": "ctrl+alt+shift+down"
+    },
+    {
+      "id": "User.selectOutput.D3F0B923",
+      "keys": "ctrl+shift+up"
+    },
+    {
+      "id": "User.selectOutput.2A0DA8E0",
+      "keys": "ctrl+shift+down"
+    },
+    {
+      "id": "User.splitPane.A6751878",
+      "keys": "alt+shift+d"
+    }
+  ],
+  "newTabMenu": [
+    {
+      "type": "profile",
+      "profile": "PowerShell"
+    },
+    {
+      "type": "profile",
+      "profile": "Windows PowerShell"
+    },
+    {
+      "type": "folder",
       "name": "Exotic PowerShell",
       "icon": "ms-appx:///ProfileIcons/{61c54bbd-c2c6-5271-96e7-009a87ff44bf}.png",
       "entries": [
-        { "type":"profile", "profile": "PowerShell 7 Preview" },
-        { "type":"profile", "profile": "PowerShell (Linux)" },
-        { "type":"profile", "profile": "PowerShell v2 Engine" },
-        { "type":"profile", "profile": "PowerShell v2 (32-bit)" }
+        {
+          "type": "profile",
+          "profile": "PowerShell 7 Preview"
+        },
+        {
+          "type": "profile",
+          "profile": "PowerShell (Linux)"
+        },
+        {
+          "type": "profile",
+          "profile": "PowerShell v2 Engine"
+        },
+        {
+          "type": "profile",
+          "profile": "PowerShell v2 (32-bit)"
+        }
       ]
     },
     {
-        "type": "remainingProfiles"
+      "type": "remainingProfiles"
     }
   ],
   "newTabPosition": "afterCurrentTab",
