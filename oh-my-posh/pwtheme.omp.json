@@ -20,9 +20,9 @@
             "style": "austin",
             "threshold": 1
           },
+          "template": " {{ .FormattedMs }} ",
           "leading_diamond": "\u2590",
           "trailing_diamond": "\ue0b0",
-          "template": " {{ .FormattedMs }} ",
           "foreground": "white",
           "background": "blue"
         },
@@ -34,8 +34,8 @@
             "style": "short"
           },
           "template": " {{ path .Path .Location }} ",
-          "foreground": "lightWhite",
           "powerline_symbol": "\ue0b0",
+          "foreground": "lightWhite",
           "background": "lightBlue"
         },
         {
@@ -47,8 +47,8 @@
             "fetch_upstream_icon": true
           },
           "template": " {{ .HEAD }} {{ .BranchStatus }}{{ if .Working.Changed }} \uf044 {{ .Working.String }}{{ end }}{{ if and (.Staging.Changed) (.Working.Changed) }} |{{ end }}{{ if .Staging.Changed }} \uf046 {{ .Staging.String }}{{ end }}{{ if gt .StashCount 0}} \uf692 {{ .StashCount }}{{ end }}{{ if gt .WorktreeCount 0}} \uf1bb {{ .WorktreeCount }}{{ end }} ",
-          "foreground": "cyan",
           "powerline_symbol": "\ue0b0",
+          "foreground": "cyan",
           "background": "white"
         },
         {
@@ -58,8 +58,8 @@
             "always_enabled": false,
             "cache_duration": "none"
           },
-          "trailing_diamond": "\ue0b4",
           "template": " {{ if gt .Code 0 }}\u2a2f{{ else }}\uf42e{{ end }} ",
+          "trailing_diamond": "\ue0b4",
           "foreground": "lightWhite",
           "background": "#2e9599",
           "background_templates": [
@@ -108,10 +108,10 @@
         {
           "type": "text",
           "style": "plain",
+          "alias": "Character",
           "properties": {
             "cache_duration": "none"
           },
-          "alias": "Character",
           "template": " {{if .Env.SHLVL}}❯{{end}}❯ "
         }
       ],
