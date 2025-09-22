@@ -1,4 +1,5 @@
 ﻿#Requires -Version 5
+# Requires -Modules PSStyle
 <#
     .LINK
         https://learn.microsoft.com/windows/terminal/tutorials/shell-integration
