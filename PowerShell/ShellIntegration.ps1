@@ -7,6 +7,9 @@
 
 $Global:__LastHistoryId = -1
 
+if ($PSVersionTable.PSEdition -eq 'Desktop') {
+    Import-Module PSStyle
+}
 if (Get-Module PSReadLine -ErrorAction SilentlyContinue) {
     Set-PSReadLineOption -ExtraPromptLineCount 1
     Set-PSReadLineOption -PromptText '❯ '
