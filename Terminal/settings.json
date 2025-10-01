@@ -138,7 +138,7 @@
         },
         {
           "type": "profile",
-          "profile": "PowerShell v2 Engine"
+          "profile": "Windows PowerShell (32-bit)"
         },
         {
           "type": "profile",
@@ -180,16 +180,6 @@
         "tabTitle": "PowerShell 5.1"
       },
       {
-        "name": "PowerShell v2 Engine",
-        "guid": "{0b827fef-1047-4794-96ca-deb2bdf75c71}",
-        "colorScheme": "Campbell Powershell",
-        "commandline": "powershell.exe -version 2",
-        "hidden": false,
-        "icon": "ms-appx:///ProfileIcons/{61c54bbd-c2c6-5271-96e7-009a87ff44bf}.png",
-        "startingDirectory": "%USERPROFILE%",
-        "tabTitle": "PowerShell v2"
-      },
-      {
         "name": "PowerShell 7 Preview",
         "guid": "{a3a2e83a-884a-5379-baa8-16f193a13b21}",
         "backgroundImage": "%OneDrive%/Pictures/Logod/Powershell/Square150x150Logo-Preview.png",
@@ -199,6 +189,16 @@
         "hidden": false,
         "source": "Windows.Terminal.PowershellCore",
         "tabTitle": "pwsh (Preview)"
+      },
+      {
+        "name": "PowerShell v2 Engine",
+        "guid": "{0b827fef-1047-4794-96ca-deb2bdf75c71}",
+        "colorScheme": "Campbell Powershell",
+        "commandline": "powershell.exe -version 2",
+        "hidden": false,
+        "icon": "ms-appx:///ProfileIcons/{61c54bbd-c2c6-5271-96e7-009a87ff44bf}.png",
+        "startingDirectory": "%USERPROFILE%",
+        "tabTitle": "PowerShell v2"
       },
       {
         "name": "PowerShell (Linux)",
