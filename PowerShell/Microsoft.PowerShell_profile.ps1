@@ -1,4 +1,8 @@
 ﻿
+if ($PSVersionTable.PSVersion -gt '7.1') {
+    $PSStyle.Progress.UseOSCIndicator = $true
+}
+
 if ($PSVersionTable.PSVersion.Major -gt 2) {
     #region Remove Curl alias
     if (Get-Alias -Name curl -ErrorAction SilentlyContinue) {
