@@ -1,4 +1,8 @@
-$host.UI.RawUi.WindowTitle = '{2} - {0}@{1}' -f $env:USERNAME, $env:COMPUTERNAME, (Get-Process -id $pid).ProcessName
+﻿$Host.UI.RawUi.WindowTitle = @(
+    '{0}@{1}' -f $env:USERNAME, $env:COMPUTERNAME
+    'PS {0}' -f $PSVersionTable.PSVersion.Major
+    if (Get-ChildItem -Path 'env:ssh*') { 'SSH' }
+) -join ' - '
 
 if (Get-Module PSReadLine) {
     Set-PSReadLineOption -ExtraPromptLineCount 1
