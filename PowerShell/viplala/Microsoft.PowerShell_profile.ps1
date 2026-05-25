@@ -1,8 +1,25 @@
-﻿$Host.UI.RawUi.WindowTitle = @(
-    '{0}@{1}' -f $env:USERNAME, $env:COMPUTERNAME
-    'PS {0}' -f $PSVersionTable.PSVersion.Major
-    if (Get-ChildItem -Path 'env:ssh*') { 'SSH' }
-) -join ' - '
+﻿function Set-WindowTitle {
+    [Alias('Set-Title', 'Title')]
+    [CmdletBinding(
+        SupportsShouldProcess
+    )]
+    param (
+            [string]
+        $Title
+    )
+    if (-not $Title) {
+        $title = @(
+            '{0}@{1}' -f $Env:USERNAME, $Env:COMPUTERNAME
+            'PS {0}' -f $PSVersionTable.PSVersion.Major
+            if ($env:SSH_CONNECTION) { 'SSH' }
+        ) -join ' - '
+    }
+    if (Test-IsAdmin) { $title = 'Admin: ' + $title }
+    if ($PSCmdlet.ShouldProcess($Title, "Change window title to")) {
+        $Host.UI.RawUI.WindowTitle = $Title
+    }
+}
+Set-WindowTitle
 
 if (Get-Module PSReadLine) {
     Set-PSReadLineOption -ExtraPromptLineCount 1
